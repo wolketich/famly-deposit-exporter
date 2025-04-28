@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
 """
-Famly Deposit Extractor
+Famly Deposit Extractor with Batch Processing
 
-A script to extract deposit information from a specific child's profile in the Famly system.
-Uses the exact same logic as the original JavaScript DepositExtractor.
+A script to extract deposit information from multiple children's profiles in the Famly system.
+Processes a CSV file containing child names and IDs.
 
 Usage:
-    python famly_deposit_extractor.py --username <email> --password <password> --child-id <id> --output <filename.csv>
+    python famly_deposit_extractor.py --username <email> --password <password> --input <children.csv> [--output-dir <dir>]
+
+CSV Format:
+    name,child_id
+    Example:
+    John Smith,123456
+    Jane Doe,789012
 
 Requirements:
     pip install selenium pandas webdriver-manager tqdm
@@ -39,17 +45,25 @@ from selenium.common.exceptions import (
 )
 from webdriver_manager.chrome import ChromeDriverManager
 
-# Configuration with updated timestamp and user
+# Configuration - All time delays are in seconds
 CONFIG = {
     "BASE_URL": "https://app.famly.co/#/login",
     "CHILD_PROFILE_URL_TEMPLATE": "https://app.famly.co/#/account/childProfile/{}/plansAndInvoices",
     "USER": "wolketich",
-    "TIMESTAMP": "2025-04-28 14:57:50",  # Updated as provided
-    "DEFAULT_TIMEOUT": 25,
-    "PAGE_LOAD_WAIT": 7,
-    "RETRY_ATTEMPTS": 3,
-    "DELAY_BETWEEN_ACTIONS": 1.0,
-    "MODAL_LOAD_DELAY": 2.0,
+    "TIMESTAMP": "2025-04-28 15:09:47",  # Updated timestamp
+    "TIMEOUTS": {
+        "DEFAULT": 25,         # Default timeout for WebDriverWait
+        "PAGE_LOAD": 3,        # Wait after initial page navigation
+        "LOGIN": 15,           # Wait for login to complete
+        "MODAL_APPEAR": 1.0,   # Wait for modal to appear after clicking
+        "MODAL_CLOSE": 0.5,    # Wait after closing modal
+        "BETWEEN_ACTIONS": 0.3, # Delay between UI actions
+        "BETWEEN_CHILDREN": 3.0 # Delay between processing different children
+    },
+    "RETRY": {
+        "ATTEMPTS": 3,          # Number of retry attempts
+        "DELAY": 1.0            # Delay between retries
+    },
     "SELECTORS": {
         "LOGIN": {
             "EMAIL_INPUT": 'input[type="email"]',
@@ -108,10 +122,22 @@ logger = logging.getLogger("FamlyExtractor")
 class FamlyDepositExtractor:
     """Class for extracting deposit information from Famly system."""
     
-    def __init__(self, headless=False, debug=False):
-        """Initialize the extractor."""
+    def __init__(self, headless=False, debug=False, output_dir="output"):
+        """Initialize the extractor.
+        
+        Args:
+            headless (bool): Run browser in headless mode
+            debug (bool): Enable debug logging and visible browser
+            output_dir (str): Directory to save output files
+        """
         self.headless = headless and not debug
         self.debug = debug
+        self.output_dir = output_dir
+        
+        # Create output directory if it doesn't exist
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+            
         if debug:
             logger.setLevel(logging.DEBUG)
         
@@ -150,12 +176,20 @@ class FamlyDepositExtractor:
         self.driver.maximize_window()
         
         # Define wait strategy
-        self.wait = WebDriverWait(self.driver, CONFIG["DEFAULT_TIMEOUT"])
+        self.wait = WebDriverWait(self.driver, CONFIG["TIMEOUTS"]["DEFAULT"])
         
         logger.info("WebDriver setup complete")
     
     def login(self, username, password):
-        """Log in to the Famly system."""
+        """Log in to the Famly system.
+        
+        Args:
+            username (str): User email
+            password (str): User password
+            
+        Returns:
+            bool: True if login successful
+        """
         logger.info("Logging in to Famly...")
         
         try:
@@ -187,7 +221,7 @@ class FamlyDepositExtractor:
             self.wait.until(EC.url_changes(CONFIG["BASE_URL"]))
             
             # Additional verification
-            timeout = time.time() + CONFIG["DEFAULT_TIMEOUT"]
+            timeout = time.time() + CONFIG["TIMEOUTS"]["LOGIN"]
             while time.time() < timeout:
                 if "login" not in self.driver.current_url.lower():
                     logger.info("Login successful")
@@ -204,9 +238,18 @@ class FamlyDepositExtractor:
             logger.error(f"Login failed: {str(e)}")
             return False
     
-    def navigate_to_child_profile(self, child_id):
-        """Navigate to the specified child's profile page."""
-        logger.info(f"Navigating to child profile with ID: {child_id}...")
+    def navigate_to_child_profile(self, child_id, child_name=""):
+        """Navigate to the specified child's profile page.
+        
+        Args:
+            child_id (str): Child ID
+            child_name (str): Child name (for logging)
+            
+        Returns:
+            bool: True if navigation successful
+        """
+        child_info = f"{child_name} (ID: {child_id})" if child_name else f"ID: {child_id}"
+        logger.info(f"Navigating to child profile: {child_info}")
         
         try:
             # Format URL with child ID
@@ -217,8 +260,8 @@ class FamlyDepositExtractor:
             self.driver.get(url)
             
             # Wait for the page to load
-            logger.info(f"Waiting {CONFIG['PAGE_LOAD_WAIT']} seconds for initial page load...")
-            time.sleep(CONFIG["PAGE_LOAD_WAIT"])
+            logger.info(f"Waiting {CONFIG['TIMEOUTS']['PAGE_LOAD']} seconds for initial page load...")
+            time.sleep(CONFIG["TIMEOUTS"]["PAGE_LOAD"])
             
             # Verify page loaded by checking for specific elements
             page_loaded = False
@@ -236,7 +279,7 @@ class FamlyDepositExtractor:
                 logger.warning("Could not confirm page load with selectors. Will continue anyway.")
             
             # Additional wait for dynamic content
-            time.sleep(CONFIG["DELAY_BETWEEN_ACTIONS"])
+            time.sleep(CONFIG["TIMEOUTS"]["BETWEEN_ACTIONS"])
             
             return True
             
@@ -245,7 +288,11 @@ class FamlyDepositExtractor:
             return False
     
     def is_page_fully_loaded(self):
-        """Check if the page is fully loaded."""
+        """Check if the page is fully loaded.
+        
+        Returns:
+            bool: True if page is fully loaded
+        """
         try:
             # Check if document.readyState is complete
             ready_state = self.driver.execute_script("return document.readyState")
@@ -268,7 +315,11 @@ class FamlyDepositExtractor:
             return False
 
     def find_deposits(self):
-        """Find all deposits on the page using exact original DepositExtractor logic."""
+        """Find all deposits on the page using the original DepositExtractor logic.
+        
+        Returns:
+            list: List of deposit objects
+        """
         logger.info("Finding deposits using original DepositExtractor logic...")
         
         # Make sure page is fully loaded
@@ -278,7 +329,7 @@ class FamlyDepositExtractor:
             time.sleep(1)
         
         # Additional safety delay
-        time.sleep(3)
+        time.sleep(CONFIG["TIMEOUTS"]["BETWEEN_ACTIONS"])
         
         # Inject the exact original DepositExtractor code
         try:
@@ -409,9 +460,6 @@ class FamlyDepositExtractor:
                     const paragraphs = DOMUtils.querySelectorAll('p', container);
                     const smallElements = DOMUtils.querySelectorAll('small', container);
                     
-                    // Check for Return text
-                    const hasBeenReturned = paragraphs.some(p => p.textContent.trim() === 'Return') || 
-                                          DOMUtils.elementContainsText(container, 'Return');
                     
                     // Find currency and amount
                     let currency = '';
@@ -467,20 +515,49 @@ class FamlyDepositExtractor:
                         }
                     }
                     
-                    // Get return status if applicable
-                    let returnStatus = '';
-                    if (hasBeenReturned) {
-                        const returnParagraph = paragraphs.find(p => p.textContent.trim() === 'Return');
-                        if (returnParagraph) {
-                            const returnParent = returnParagraph.parentElement;
-                            if (returnParent) {
-                                const smallInParent = DOMUtils.querySelector('small', returnParent);
-                                if (smallInParent) {
-                                    returnStatus = smallInParent.textContent.trim();
-                                }
-                            }
-                        }
-                    }
+                    // IMPROVED RETURN DETECTION - REPLACE THIS SECTION
+    // Method 1: Look directly for paragraphs with exact 'Return' text
+    const returnParagraphs = paragraphs.filter(p => p.textContent.trim() === 'Return');
+    
+    // Method 2: Look for parent Stack divs that contain Return paragraphs
+    const stackDivs = Array.from(container.querySelectorAll('[class*="MuiStack"]'));
+    const returnStacks = stackDivs.filter(div => {
+        const p = div.querySelector('p');
+        return p && p.textContent.trim() === 'Return';
+    });
+    
+    // Determine if this deposit has been returned using both methods
+    const hasBeenReturned = returnParagraphs.length > 0 || returnStacks.length > 0;
+    
+    console.log(`Deposit ${index}: found ${returnParagraphs.length} direct return paragraphs, ${returnStacks.length} return stacks`);
+    console.log(`Deposit ${index}: hasBeenReturned = ${hasBeenReturned}`);
+    
+    // Rest of your function remains the same...
+    // ...
+    
+    // Get return status if applicable
+    let returnStatus = '';
+    if (hasBeenReturned) {
+        // Try to find return status in small element near Return text
+        if (returnParagraphs.length > 0) {
+            const returnPara = returnParagraphs[0];
+            const parent = returnPara.parentElement;
+            if (parent) {
+                const small = parent.querySelector('small');
+                if (small) {
+                    returnStatus = small.textContent.trim();
+                }
+            }
+        }
+        // Alternative: check stack divs if direct method fails
+        else if (returnStacks.length > 0) {
+            const returnStack = returnStacks[0];
+            const small = returnStack.querySelector('small');
+            if (small) {
+                returnStatus = small.textContent.trim();
+            }
+        }
+    }
                     
                     // Generate XPath for the element for easier identification later
                     function getXPath(element) {
@@ -668,7 +745,7 @@ class FamlyDepositExtractor:
             logger.debug(f"Clicked on deposit #{deposit['index']}")
             
             # Wait for modal to appear
-            time.sleep(CONFIG["MODAL_LOAD_DELAY"])
+            time.sleep(CONFIG["TIMEOUTS"]["MODAL_APPEAR"])
             
             # Check for modal presence
             modal_found = False
@@ -684,7 +761,7 @@ class FamlyDepositExtractor:
             
             if not modal_found:
                 logger.warning(f"Modal not detected for deposit #{deposit['index']}")
-                time.sleep(CONFIG["MODAL_LOAD_DELAY"])  # Try waiting longer
+                time.sleep(CONFIG["TIMEOUTS"]["MODAL_APPEAR"])  # Try waiting longer
             
             # Extract data from modal
             try:
@@ -768,7 +845,7 @@ class FamlyDepositExtractor:
                 pass
             
             # Wait for modal to close
-            time.sleep(CONFIG["DELAY_BETWEEN_ACTIONS"])
+            time.sleep(CONFIG["TIMEOUTS"]["MODAL_CLOSE"])
             
         except Exception as e:
             logger.error(f"Error processing deposit #{deposit['index']}: {str(e)}")
@@ -792,7 +869,7 @@ class FamlyDepositExtractor:
             self.extracted_data.append(detailed_deposit)
             
             # Small delay to avoid overwhelming the page
-            time.sleep(CONFIG["DELAY_BETWEEN_ACTIONS"])
+            time.sleep(CONFIG["TIMEOUTS"]["BETWEEN_ACTIONS"])
         
         logger.info(f"Extracted details for {len(self.extracted_data)} deposits")
         return self.extracted_data
@@ -819,6 +896,99 @@ class FamlyDepositExtractor:
             logger.error(f"Export failed: {str(e)}")
             return False
     
+    def process_child(self, child_id, child_name=""):
+        """Process a single child and extract their deposits.
+        
+        Args:
+            child_id (str): Child ID
+            child_name (str): Child name
+            
+        Returns:
+            dict: Processing result
+        """
+        try:
+            # Reset deposits and extracted data
+            self.deposits = []
+            self.extracted_data = []
+            
+            # Navigate to child profile
+            if not self.navigate_to_child_profile(child_id, child_name):
+                return {
+                    "success": False,
+                    "child_id": child_id,
+                    "child_name": child_name,
+                    "error": "Failed to navigate to child profile"
+                }
+            
+            # Find deposits
+            deposits = self.find_deposits()
+            if not deposits:
+                return {
+                    "success": True,
+                    "child_id": child_id,
+                    "child_name": child_name,
+                    "count": 0,
+                    "message": "No deposits found"
+                }
+            
+            # Extract deposit details
+            self.extract_all_deposits()
+            
+            # Create filename
+            safe_name = child_name.replace(" ", "_").replace("/", "_").replace("\\", "_")
+            filename = f"{safe_name}_{child_id}_deposits.csv" if safe_name else f"child_{child_id}_deposits.csv"
+            output_file = os.path.join(self.output_dir, filename)
+            
+            # Export to CSV
+            if not self.export_to_csv(output_file):
+                return {
+                    "success": False,
+                    "child_id": child_id,
+                    "child_name": child_name,
+                    "error": "Failed to export data"
+                }
+            
+            return {
+                "success": True,
+                "child_id": child_id,
+                "child_name": child_name,
+                "count": len(self.extracted_data),
+                "output_file": output_file
+            }
+            
+        except Exception as e:
+            logger.error(f"Error processing child {child_name} (ID: {child_id}): {str(e)}")
+            return {
+                "success": False,
+                "child_id": child_id,
+                "child_name": child_name,
+                "error": str(e)
+            }
+    
+    def batch_process(self, children_data):
+        """Process a batch of children.
+        
+        Args:
+            children_data (list): List of dicts with name and child_id
+            
+        Returns:
+            list: Results for each child
+        """
+        results = []
+        
+        for i, child in enumerate(children_data):
+            logger.info(f"Processing child {i+1}/{len(children_data)}: {child.get('name', '')} (ID: {child.get('child_id', '')})")
+            
+            # Process child
+            result = self.process_child(child.get('child_id', ''), child.get('name', ''))
+            results.append(result)
+            
+            # Delay between children
+            if i < len(children_data) - 1:  # Don't delay after the last child
+                time.sleep(CONFIG["TIMEOUTS"]["BETWEEN_CHILDREN"])
+        
+        return results
+    
     def cleanup(self):
         """Clean up resources."""
         logger.info("Cleaning up...")
@@ -829,39 +999,91 @@ class FamlyDepositExtractor:
         
         logger.info("Cleanup complete")
     
-    def run(self, username, password, child_id, output_file):
-        """Run the complete extraction process."""
+    def run_batch(self, username, password, input_file):
+        """Run batch processing for multiple children.
+        
+        Args:
+            username (str): User email
+            password (str): User password
+            input_file (str): Path to input CSV file
+            
+        Returns:
+            dict: Batch processing results
+        """
         try:
+            # Read input CSV file
+            try:
+                children_df = pd.read_csv(input_file)
+                
+                # Validate required columns
+                required_columns = ['name', 'child_id']
+                for col in required_columns:
+                    if col not in children_df.columns:
+                        return {
+                            "success": False,
+                            "error": f"CSV file missing required column: {col}"
+                        }
+                
+                # Convert to list of dicts
+                children_data = children_df.to_dict('records')
+                
+                if not children_data:
+                    return {
+                        "success": False,
+                        "error": "No children found in CSV file"
+                    }
+                
+                logger.info(f"Found {len(children_data)} children in CSV file")
+                
+            except Exception as e:
+                logger.error(f"Error reading input file: {str(e)}")
+                return {
+                    "success": False,
+                    "error": f"Failed to read input file: {str(e)}"
+                }
+            
             # Login
             if not self.login(username, password):
-                return {"success": False, "error": "Login failed"}
+                return {
+                    "success": False,
+                    "error": "Login failed"
+                }
             
-            # Navigate to child profile
-            if not self.navigate_to_child_profile(child_id):
-                return {"success": False, "error": "Navigation to child profile failed"}
+            # Process each child
+            results = self.batch_process(children_data)
             
-            # Find deposits
-            self.find_deposits()
-            if not self.deposits:
-                return {"success": False, "error": "No deposits found"}
+            # Generate summary
+            successful = [r for r in results if r.get('success', False)]
+            failed = [r for r in results if not r.get('success', False)]
+            total_deposits = sum(r.get('count', 0) for r in successful)
             
-            # Extract deposit details
-            self.extract_all_deposits()
-            
-            # Export to CSV
-            if not self.export_to_csv(output_file):
-                return {"success": False, "error": "Export failed"}
-            
-            return {
+            summary = {
                 "success": True,
-                "count": len(self.extracted_data),
-                "output_file": output_file
+                "total_children": len(children_data),
+                "successful_children": len(successful),
+                "failed_children": len(failed),
+                "total_deposits": total_deposits,
+                "results": results,
+                "timestamp": CONFIG["TIMESTAMP"]
             }
             
-        except Exception as e:
-            logger.error(f"Extraction failed: {str(e)}")
-            return {"success": False, "error": str(e)}
+            # Export summary
+            summary_file = os.path.join(self.output_dir, f"summary_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json")
+            with open(summary_file, 'w') as f:
+                json.dump(summary, f, indent=2)
             
+            logger.info(f"Batch processing completed. Summary saved to {summary_file}")
+            logger.info(f"Processed {len(children_data)} children: {len(successful)} successful, {len(failed)} failed")
+            logger.info(f"Total deposits extracted: {total_deposits}")
+            
+            return summary
+            
+        except Exception as e:
+            logger.error(f"Batch processing failed: {str(e)}")
+            return {
+                "success": False,
+                "error": str(e)
+            }
         finally:
             self.cleanup()
 
@@ -869,11 +1091,11 @@ class FamlyDepositExtractor:
 def main():
     """Main entry point for the script."""
     # Parse command line arguments
-    parser = argparse.ArgumentParser(description="Extract deposit information from Famly system")
+    parser = argparse.ArgumentParser(description="Extract deposit information from Famly system for multiple children")
     parser.add_argument("-u", "--username", help="Famly login email")
     parser.add_argument("-p", "--password", help="Famly login password")
-    parser.add_argument("-c", "--child-id", required=True, help="Child ID")
-    parser.add_argument("-o", "--output", default="famly_deposits.csv", help="Output CSV file")
+    parser.add_argument("-i", "--input", help="Input CSV file with child names and IDs", required=True)
+    parser.add_argument("-o", "--output-dir", default="output", help="Output directory for CSV files")
     parser.add_argument("--headless", action="store_true", help="Run in headless mode")
     parser.add_argument("--debug", action="store_true", help="Enable debug logging")
     args = parser.parse_args()
@@ -889,15 +1111,17 @@ def main():
         password = getpass("Enter your Famly login password: ")
     
     # Create and run extractor
-    extractor = FamlyDepositExtractor(headless=args.headless, debug=args.debug)
-    result = extractor.run(username, password, args.child_id, args.output)
+    extractor = FamlyDepositExtractor(headless=args.headless, debug=args.debug, output_dir=args.output_dir)
+    result = extractor.run_batch(username, password, args.input)
     
     if result["success"]:
-        print(f"\n✅ Extraction completed successfully!")
-        print(f"📄 {result['count']} deposits exported to {result['output_file']}")
+        print(f"\n✅ Batch processing completed successfully!")
+        print(f"📊 Processed {result['total_children']} children: {result['successful_children']} successful, {result['failed_children']} failed")
+        print(f"💰 Total deposits extracted: {result['total_deposits']}")
+        print(f"📁 Results saved to {args.output_dir} directory")
         return 0
     else:
-        print(f"\n❌ Extraction failed: {result['error']}")
+        print(f"\n❌ Batch processing failed: {result['error']}")
         return 1
 
 

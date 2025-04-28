@@ -1,0 +1,42 @@
+2025-04-28 17:19:50,388 - INFO - Setting up WebDriver...
+2025-04-28 17:19:50,388 - INFO - ====== WebDriver manager ======
+2025-04-28 17:19:50,619 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 17:19:50,743 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 17:19:50,827 - INFO - Driver [/Users/walkcat/.wdm/drivers/chromedriver/mac64/135.0.7049.114/chromedriver-mac-arm64/chromedriver] found in cache
+2025-04-28 17:19:51,884 - INFO - WebDriver setup complete
+2025-04-28 17:19:51,887 - INFO - Found 6 children in CSV file
+2025-04-28 17:19:51,887 - INFO - Logging in to Famly...
+2025-04-28 17:19:54,402 - INFO - Login successful
+2025-04-28 17:19:54,403 - INFO - Processing child 1/6: Aafiah Khan (ID: 9cfe983a-f949-4c99-8a09-13a42de6d905)
+2025-04-28 17:19:54,405 - INFO - Navigating to child profile: Aafiah Khan (ID: 9cfe983a-f949-4c99-8a09-13a42de6d905)
+2025-04-28 17:19:54,405 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/9cfe983a-f949-4c99-8a09-13a42de6d905/plansAndInvoices
+2025-04-28 17:19:54,412 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 17:19:57,429 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 17:19:57,735 - INFO - Finding deposits using robust deposit finder...
+2025-04-28 17:19:58,071 - INFO - Found 8 deposits
+2025-04-28 17:19:58,071 - INFO - Page title: Famly | Child profile
+2025-04-28 17:19:58,071 - INFO - Found 1 paragraphs containing 'Deposit'
+2025-04-28 17:19:58,071 - INFO - Found 1 paragraphs containing 'Return'
+2025-04-28 17:19:58,071 - INFO - Found 3 returned deposits
+2025-04-28 17:19:58,071 - INFO - Extracting details for 8 deposits...
+2025-04-28 17:19:59,166 - WARNING - Modal not detected for deposit #1 (attempt 1)
+2025-04-28 17:20:01,210 - WARNING - Modal not detected for deposit #1 (attempt 2)
+2025-04-28 17:20:03,268 - WARNING - Modal not detected for deposit #1 (attempt 3)
+2025-04-28 17:20:03,268 - WARNING - Modal not found, but will try to extract data anyway
+2025-04-28 17:20:03,913 - WARNING - Modal may still be open for deposit #1
+2025-04-28 17:20:07,260 - WARNING - Modal not detected for deposit #3 (attempt 1)
+2025-04-28 17:20:09,329 - WARNING - Modal not detected for deposit #3 (attempt 2)
+2025-04-28 17:20:11,390 - WARNING - Modal not detected for deposit #3 (attempt 3)
+2025-04-28 17:20:11,390 - WARNING - Modal not found, but will try to extract data anyway
+2025-04-28 17:20:12,012 - WARNING - Modal may still be open for deposit #3
+2025-04-28 17:20:22,273 - INFO - Extracted details for 8 deposits
+2025-04-28 17:20:22,273 - INFO - Exporting data to CSV: output/Aafiah_Khan_9cfe983a-f949-4c99-8a09-13a42de6d905_deposits.csv
+2025-04-28 17:20:22,279 - INFO - Successfully exported 8 deposits to output/Aafiah_Khan_9cfe983a-f949-4c99-8a09-13a42de6d905_deposits.csv
+2025-04-28 17:20:24,533 - INFO - Batch processing completed in 0.54 minutes. Summary saved to output/summary_20250428_172024.json
+2025-04-28 17:20:24,533 - INFO - Processed 6 children: 0 successful, 0 failed
+2025-04-28 17:20:24,533 - INFO - Total deposits extracted: 0 (including 0 returned deposits)
+2025-04-28 17:20:24,533 - INFO - Cleaning up resources...
+2025-04-28 17:20:24,540 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1053e2720>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/b9113d8320901d1cdfc5969a00d52257
+2025-04-28 17:20:24,540 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10544b0e0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/b9113d8320901d1cdfc5969a00d52257
+2025-04-28 17:20:24,541 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10544b2c0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/b9113d8320901d1cdfc5969a00d52257
+2025-04-28 17:20:24,572 - INFO - Cleanup complete

@@ -1,0 +1,4 @@
+"index","amount","currency","depositStatus","hasBeenReturned","returnStatus","billPayer","formAmount","depositDate","note","alreadyPaid","extractedBy","extractedAt","errorMessage"
+"1","0.00","€","Paid externally","False","","Aaron","0","28/04/2025","Test","True","wolketich","2025-04-28 14:57:50",""
+"2","123.00","€","Pending invoice","False","","Aaron","123","28/04/2025","test2 Not Already Paid 123","False","wolketich","2025-04-28 14:57:50",""
+"3","1010.00","€","Paid externally","False","","Aaron","1010","10/10/2024","f","True","wolketich","2025-04-28 14:57:50",""

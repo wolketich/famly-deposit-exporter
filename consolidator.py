@@ -101,7 +101,7 @@ def consolidate_deposits(summary_file, base_dir=None, output_excel=None, timesta
                         break
                 
                 # Format amount with currency
-                currency = deposit.get('currency', '')
+                # currency = deposit.get('currency', '')
                 formatted_amount = amount if amount else 0
                 
                 # Get date
@@ -122,7 +122,7 @@ def consolidate_deposits(summary_file, base_dir=None, output_excel=None, timesta
                     'Date': date,
                     'Note': note,
                     'Is Returned': 'Yes' if deposit.get('hasBeenReturned', False) else 'No',
-                    'Return Status': deposit.get('returnStatus', ''),
+                    'Refund Status': deposit.get('refundState', ''),
                     'Deposit Status': deposit.get('depositStatus', ''),
                     'Bill Payer': deposit.get('billPayer', '')
                 })

@@ -50,7 +50,7 @@ CONFIG = {
     "BASE_URL": "https://app.famly.co/#/login",
     "CHILD_PROFILE_URL_TEMPLATE": "https://app.famly.co/#/account/childProfile/{}/plansAndInvoices",
     "USER": "wolketich",
-    "TIMESTAMP": "2025-04-28 15:09:47",  # Updated timestamp
+    "TIMESTAMP": "2025-04-28 20:02:21",  # Updated timestamp
     "TIMEOUTS": {
         "DEFAULT": 25,         # Default timeout for WebDriverWait
         "PAGE_LOAD": 3,        # Wait after initial page navigation
@@ -315,12 +315,12 @@ class FamlyDepositExtractor:
             return False
 
     def find_deposits(self):
-        """Find all deposits on the page using the original DepositExtractor logic.
+        """Find all deposits on the page using improved deposit finder with correct refund detection.
         
         Returns:
             list: List of deposit objects
         """
-        logger.info("Finding deposits using original DepositExtractor logic...")
+        logger.info("Finding deposits with improved 4-state refund detection...")
         
         # Make sure page is fully loaded
         max_wait = time.time() + 20
@@ -331,315 +331,310 @@ class FamlyDepositExtractor:
         # Additional safety delay
         time.sleep(CONFIG["TIMEOUTS"]["BETWEEN_ACTIONS"])
         
-        # Inject the exact original DepositExtractor code
+        # Inject the updated JavaScript code with improved refund detection
         try:
             script = """
-            // Execute the original DepositExtractor logic
-const extractorResult = (function() {
-    'use strict';
-    
-    // Configuration settings - directly from the original code
-    const CONFIG = {
-        SELECTORS: {
-            DEPOSITS: {
-                CONTAINERS: [
-                    '.sc-beqWaB.sc-eIoBCF.bUiODS.iDrAoK',
-                    '[class*="sc-beqWaB"][class*="sc-eIoBCF"]',
-                    '.sc-dxnOzg',
-                    '.sc-beqWaB.sc-eKNumk.sc-hbpqLB'
-                ],
-                CURRENCY_SYMBOLS: ['€', '$', '£']
-            }
-        }
-    };
-    
-    // Utility functions - directly from original code
-    const DOMUtils = {
-        querySelector: function(selector, root = document) {
-            try {
-                return root.querySelector(selector);
-            } catch (error) {
-                console.error(`Invalid selector: ${selector}`, error);
-                return null;
-            }
-        },
-        
-        querySelectorAll: function(selector, root = document) {
-            try {
-                return Array.from(root.querySelectorAll(selector));
-            } catch (error) {
-                console.error(`Invalid selector: ${selector}`, error);
-                return [];
-            }
-        },
-        
-        elementContainsText: function(element, text) {
-            return element.textContent.trim().includes(text);
-        },
-        
-        findElementsByText: function(tagName, text, root = document) {
-            return this.querySelectorAll(tagName, root)
-                .filter(el => el.textContent.trim() === text);
-        },
-        
-        findAncestor: function(element, predicate, maxDepth = 10) {
-            let current = element;
-            let depth = 0;
-            
-            while (current && depth < maxDepth) {
-                if (predicate(current)) {
-                    return current;
-                }
-                current = current.parentElement;
-                depth++;
-            }
-            
-            return null;
-        }
-    };
-
-    // Find deposit containers - exactly as in the original code
-    function findDepositContainers() {
-        // Try direct selectors first
-        const containerSelectors = CONFIG.SELECTORS.DEPOSITS.CONTAINERS.join(', ');
-        let containers = DOMUtils.querySelectorAll(containerSelectors);
-        
-        console.log(`Found ${containers.length} potential containers with direct selectors`);
-        
-        // Filter to only include those with "Deposit" text
-        containers = containers.filter(container => 
-            DOMUtils.elementContainsText(container, 'Deposit')
-        );
-        
-        console.log(`Found ${containers.length} containers with "Deposit" text`);
-        
-        // If no containers found, try generic approach
-        if (containers.length === 0) {
-            return findDepositContainersGeneric();
-        }
-        
-        return containers;
-    }
-    
-    // Generic approach - exactly as in the original code
-    function findDepositContainersGeneric() {
-        // Find all "Deposit" paragraphs
-        const depositTexts = DOMUtils.findElementsByText('p', 'Deposit');
-        console.log(`Found ${depositTexts.length} deposit texts, searching for containers...`);
-        
-        const containers = [];
-        
-        // For each deposit text, find its container
-        for (const depositText of depositTexts) {
-            const container = DOMUtils.findAncestor(
-                depositText,
-                el => {
-                    // Container must have both deposit text and amount info
-                    const hasDeposit = DOMUtils.elementContainsText(el, 'Deposit');
-                    const hasAmount = CONFIG.SELECTORS.DEPOSITS.CURRENCY_SYMBOLS.some(
-                        symbol => DOMUtils.elementContainsText(el, symbol)
-                    );
-                    const hasNumbers = /\\d+\\.\\d+|\\d+,\\d+/.test(el.textContent);
+            // Execute deposit finder with improved refund state detection
+            const extractorResult = (function() {
+                'use strict';
+                
+                // Configuration with current timestamp and username
+                const CONFIG = {
+                    USER: "wolketich",
+                    TIMESTAMP: "2025-04-28 20:02:21",
+                    SELECTORS: {
+                        DEPOSITS: {
+                            CONTAINERS: [
+                                '.sc-beqWaB.sc-eIoBCF.bUiODS.iDrAoK',
+                                '[class*="sc-beqWaB"][class*="sc-eIoBCF"]',
+                                '.sc-dxnOzg',
+                                '.sc-beqWaB.sc-eKNumk.sc-hbpqLB'
+                            ],
+                            CURRENCY_SYMBOLS: ['€', '$', '£']
+                        }
+                    }
+                };
+                
+                // Utility functions - directly from original code
+                const DOMUtils = {
+                    querySelector: function(selector, root = document) {
+                        try {
+                            return root.querySelector(selector);
+                        } catch (error) {
+                            console.error(`Invalid selector: ${selector}`, error);
+                            return null;
+                        }
+                    },
                     
-                    return hasDeposit && (hasAmount || hasNumbers);
-                },
-                8 // Check up to 8 levels up
-            );
-            
-            if (container && !containers.includes(container)) {
-                containers.push(container);
-            }
-        }
-        
-        console.log(`Found ${containers.length} deposit containers using generic approach`);
-        return containers;
-    }
-    
-    // Extract deposit information - exactly as in the original code
-    function extractDepositInfo(container, index) {
-        const paragraphs = DOMUtils.querySelectorAll('p', container);
-        const smallElements = DOMUtils.querySelectorAll('small', container);
-    
-        // Find currency and amount
-        let currency = '';
-        let amount = '';
-    
-        // Check for standalone currency symbols
-        for (const symbol of CONFIG.SELECTORS.DEPOSITS.CURRENCY_SYMBOLS) {
-            const currencyParagraph = paragraphs.find(p => p.textContent.trim() === symbol);
-            if (currencyParagraph) {
-                currency = symbol;
-                
-                // Look for amount in adjacent paragraph
-                const currencyIndex = paragraphs.indexOf(currencyParagraph);
-                if (currencyIndex >= 0 && currencyIndex < paragraphs.length - 1) {
-                    const nextParagraph = paragraphs[currencyIndex + 1];
-                    if (/[0-9,.]+/.test(nextParagraph.textContent.trim())) {
-                        amount = nextParagraph.textContent.trim();
-                        break;
+                    querySelectorAll: function(selector, root = document) {
+                        try {
+                            return Array.from(root.querySelectorAll(selector));
+                        } catch (error) {
+                            console.error(`Invalid selector: ${selector}`, error);
+                            return [];
+                        }
+                    },
+                    
+                    elementContainsText: function(element, text) {
+                        return element.textContent.trim().includes(text);
+                    },
+                    
+                    findElementsByText: function(tagName, text, root = document) {
+                        return this.querySelectorAll(tagName, root)
+                            .filter(el => el.textContent.trim() === text);
+                    },
+                    
+                    findAncestor: function(element, predicate, maxDepth = 10) {
+                        let current = element;
+                        let depth = 0;
+                        
+                        while (current && depth < maxDepth) {
+                            if (predicate(current)) {
+                                return current;
+                            }
+                            current = current.parentElement;
+                            depth++;
+                        }
+                        
+                        return null;
                     }
-                }
-            }
-        }
-    
-        // If not found, look for combined format
-        if (!amount) {
-            const amountParagraph = paragraphs.find(p => 
-                /^[€$£]?\s*[0-9,.]+$/.test(p.textContent.trim())
-            );
-    
-            if (amountParagraph) {
-                const text = amountParagraph.textContent.trim();
-                const match = text.match(/^([€$£]?)\s*([0-9,.]+)$/);
-                if (match) {
-                    currency = match[1] || '';
-                    amount = match[2] || text;
-                } else {
-                    amount = text;
-                }
-            }
-        }
-    
-        // Get deposit status
-        let depositStatus = '';
-        const depositParagraph = paragraphs.find(p => p.textContent.trim() === 'Deposit');
-        if (depositParagraph) {
-            // Find small element following deposit paragraph
-            const depositParent = depositParagraph.parentElement;
-            if (depositParent) {
-                const smallInParent = DOMUtils.querySelector('small', depositParent);
-                if (smallInParent) {
-                    depositStatus = smallInParent.textContent.trim();
-                }
-            }
-        }
-    
-        // --- IMPROVED RETURN DETECTION ---
-        // --- CORRECT RETURN DETECTION FROM BLOCK (before modal) ---
-        let hasBeenReturned = null;
-        let returnStatus = '';
+                };
 
-        try {
-            const returnParagraph = Array.from(container.querySelectorAll('p'))
-                .find(p => p.textContent.trim().toLowerCase() === 'return');
-
-            if (returnParagraph) {
-                const small = returnParagraph.parentElement.querySelector('small');
-                if (small) {
-                    returnStatus = small.textContent.trim();
-                    const normalizedStatus = returnStatus.toLowerCase();
-
-                    if (normalizedStatus.includes('invoiced')) {
-                        hasBeenReturned = true;
-                    } else if (normalizedStatus.includes('pending')) {
-                        hasBeenReturned = false;
-                    } else {
-                        console.warn(`⚠️ Unknown return status detected: '${returnStatus}'`);
-                        hasBeenReturned = null;
+                // Find deposit containers - exactly as in the original code
+                function findDepositContainers() {
+                    // Try direct selectors first
+                    const containerSelectors = CONFIG.SELECTORS.DEPOSITS.CONTAINERS.join(', ');
+                    let containers = DOMUtils.querySelectorAll(containerSelectors);
+                    
+                    console.log(`Found ${containers.length} potential containers with direct selectors`);
+                    
+                    // Filter to only include those with "Deposit" text
+                    containers = containers.filter(container => 
+                        DOMUtils.elementContainsText(container, 'Deposit')
+                    );
+                    
+                    console.log(`Found ${containers.length} containers with "Deposit" text`);
+                    
+                    // If no containers found, try generic approach
+                    if (containers.length === 0) {
+                        return findDepositContainersGeneric();
                     }
-                } else {
-                    console.warn('⚠️ Return paragraph found, but no small tag for status');
-                    hasBeenReturned = null;
-                    returnStatus = 'Missing status';
+                    
+                    return containers;
                 }
-            } else {
-                console.warn('⚠️ No Return paragraph inside this deposit container');
-                hasBeenReturned = null;
-                returnStatus = 'No Return Info';
-            }
-        } catch (error) {
-            console.error('⚠️ Error detecting return info:', error);
-            hasBeenReturned = null;
-            returnStatus = 'Error';
-        }
-
-    
-        // Generate XPath for the element for easier identification later
-        function getXPath(element) {
-            if (element.id !== '')
-                return `//*[@id="${element.id}"]`;
-            
-            if (element === document.body)
-                return '/html/body';
-            
-            let ix = 0;
-            const siblings = element.parentNode.childNodes;
-            
-            for (let i = 0; i < siblings.length; i++) {
-                const sibling = siblings[i];
                 
-                if (sibling === element)
-                    return getXPath(element.parentNode) + '/' + element.tagName.toLowerCase() + '[' + (ix + 1) + ']';
+                // Generic approach - exactly as in the original code
+                function findDepositContainersGeneric() {
+                    // Find all "Deposit" paragraphs
+                    const depositTexts = DOMUtils.findElementsByText('p', 'Deposit');
+                    console.log(`Found ${depositTexts.length} deposit texts, searching for containers...`);
+                    
+                    const containers = [];
+                    
+                    // For each deposit text, find its container
+                    for (const depositText of depositTexts) {
+                        const container = DOMUtils.findAncestor(
+                            depositText,
+                            el => {
+                                // Container must have both deposit text and amount info
+                                const hasDeposit = DOMUtils.elementContainsText(el, 'Deposit');
+                                const hasAmount = CONFIG.SELECTORS.DEPOSITS.CURRENCY_SYMBOLS.some(
+                                    symbol => DOMUtils.elementContainsText(el, symbol)
+                                );
+                                const hasNumbers = /\\d+\\.\\d+|\\d+,\\d+/.test(el.textContent);
+                                
+                                return hasDeposit && (hasAmount || hasNumbers);
+                            },
+                            8 // Check up to 8 levels up
+                        );
+                        
+                        if (container && !containers.includes(container)) {
+                            containers.push(container);
+                        }
+                    }
+                    
+                    console.log(`Found ${containers.length} deposit containers using generic approach`);
+                    return containers;
+                }
                 
-                if (sibling.nodeType === 1 && sibling.tagName === element.tagName)
-                    ix++;
-            }
-        }
-    
-        return {
-            index,
-            type: 'Deposit',
-            amount,
-            currency,
-            depositStatus,
-            hasBeenReturned,
-            returnStatus,
-            xpath: getXPath(container),
-            outerHTML: container.outerHTML.substring(0, 500) // For debugging
-        };
-    }
-    
-    
-    // Find all deposits on the page - exactly as in the original code
-    function findAllDeposits() {
-        const containers = findDepositContainers();
-        console.log(`Processing ${containers.length} deposit containers`);
-        return containers.map((container, index) => 
-            extractDepositInfo(container, index + 1)
-        );
-    }
-    
-    // Run the deposit finder
-    try {
-        // Capture page info for debugging
-        const pageTitle = document.title;
-        const url = window.location.href;
-        const pageContent = document.body.textContent;
-        const depositParas = document.querySelectorAll('p');
-        console.log(`Page title: ${pageTitle}`);
-        console.log(`URL: ${url}`);
-        console.log(`Found ${depositParas.length} paragraphs in total`);
-        
-        // Count how many paragraphs contain the word "Deposit"
-        const depositTextCount = Array.from(depositParas).filter(p => 
-            p.textContent.includes('Deposit')
-        ).length;
-        console.log(`Found ${depositTextCount} paragraphs containing "Deposit"`);
-        
-        // Find all deposits
-        const deposits = findAllDeposits();
-        console.log(`Found ${deposits.length} deposits total`);
-        
-        return {
-            success: true,
-            deposits: deposits,
-            debug: {
-                title: pageTitle,
-                url: url,
-                depositTextCount,
-                totalParagraphs: depositParas.length
-            }
-        };
-    } catch (error) {
-        console.error("Error finding deposits:", error);
-        return {
-            success: false,
-            error: error.toString()
-        };
-    }
-})();
-
-return extractorResult;
+                // Extract deposit information with 4-state refund detection
+                function extractDepositInfo(container, index) {
+                    const paragraphs = DOMUtils.querySelectorAll('p', container);
+                    const smallElements = DOMUtils.querySelectorAll('small', container);
+                    
+                    // Find currency and amount
+                    let currency = '';
+                    let amount = '';
+                    
+                    // Check for standalone currency symbols
+                    for (const symbol of CONFIG.SELECTORS.DEPOSITS.CURRENCY_SYMBOLS) {
+                        const currencyParagraph = paragraphs.find(p => p.textContent.trim() === symbol);
+                        if (currencyParagraph) {
+                            currency = symbol;
+                            
+                            // Look for amount in adjacent paragraph
+                            const currencyIndex = paragraphs.indexOf(currencyParagraph);
+                            if (currencyIndex >= 0 && currencyIndex < paragraphs.length - 1) {
+                                const nextParagraph = paragraphs[currencyIndex + 1];
+                                if (/[\\d,.]+/.test(nextParagraph.textContent.trim())) {
+                                    amount = nextParagraph.textContent.trim();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    
+                    // If not found, look for combined format
+                    if (!amount) {
+                        const amountParagraph = paragraphs.find(p => 
+                            /^[€$£]?\\s*[\\d,.]+$/.test(p.textContent.trim())
+                        );
+                        
+                        if (amountParagraph) {
+                            const text = amountParagraph.textContent.trim();
+                            const match = text.match(/^([€$£]?)\\s*([\\d,.]+)$/);
+                            if (match) {
+                                currency = match[1] || '';
+                                amount = match[2] || text;
+                            } else {
+                                amount = text;
+                            }
+                        }
+                    }
+                    
+                    // Get deposit status
+                    let depositStatus = '';
+                    const depositParagraph = paragraphs.find(p => p.textContent.trim() === 'Deposit');
+                    if (depositParagraph) {
+                        // Find small element following deposit paragraph
+                        const depositParent = depositParagraph.parentElement;
+                        if (depositParent) {
+                            const smallInParent = DOMUtils.querySelector('small', depositParent);
+                            if (smallInParent) {
+                                depositStatus = smallInParent.textContent.trim();
+                            }
+                        }
+                    }
+                    
+                    // Click the container to determine modal state before making refund state determination
+                    let hasBeenReturned = false;
+                    let refundState = '';
+                    let returnStatus = '';
+                    
+                    try {
+                        // Try to "simulate" clicking and checking refund state
+                        // In modal-based implementation, this would involve clicking to check modals
+                        
+                        // IMPROVED REFUND DETECTION BASED ON YOUR 4-STATE LOGIC:
+                        
+                        // Find return paragraph if it exists (meaning has been returned)
+                        const returnParagraph = paragraphs.find(p => p.textContent.trim() === 'Return');
+                        const returnExists = returnParagraph !== undefined;
+                        
+                        // When the real modal opens, we'll check for:
+                        // 1. Return button - button with "Return" text and no children
+                        // 2. Delete button - checks for span containing "Delete" within button
+                        // 3. Already Paid checkbox - input[name="alreadyPaid"]
+                        // 4. Cancel Return button - checks for span containing "Cancel Return" within button
+                        
+                        // When in the actual run, the deposit is clicked, then modal detection happens
+                        // For now, we'll set a default state and the modal detection will correct it
+                        returnStatus = returnExists ? 'Found Return paragraph' : 'No Return paragraph found';
+                        hasBeenReturned = returnExists;
+                        refundState = returnExists ? 'Appears refunded' : 'Not refunded';
+                    } catch (e) {
+                        console.error(`Error determining refund state: ${e}`);
+                        refundState = 'Error determining';
+                    }
+                    
+                    // Generate XPath for the element for easier identification later
+                    function getXPath(element) {
+                        if (element.id !== '')
+                            return `//*[@id="${element.id}"]`;
+                        
+                        if (element === document.body)
+                            return '/html/body';
+                        
+                        let ix = 0;
+                        const siblings = element.parentNode.childNodes;
+                        
+                        for (let i = 0; i < siblings.length; i++) {
+                            const sibling = siblings[i];
+                            
+                            if (sibling === element)
+                                return getXPath(element.parentNode) + '/' + element.tagName.toLowerCase() + '[' + (ix + 1) + ']';
+                            
+                            if (sibling.nodeType === 1 && sibling.tagName === element.tagName)
+                                ix++;
+                        }
+                    }
+                    
+                    return {
+                        index,
+                        type: 'Deposit',
+                        amount,
+                        currency,
+                        depositStatus,
+                        hasBeenReturned,
+                        returnStatus,
+                        refundState,
+                        xpath: getXPath(container),
+                        extractedBy: CONFIG.USER,
+                        extractedAt: CONFIG.TIMESTAMP,
+                        outerHTML: container.outerHTML.substring(0, 500) // For debugging
+                    };
+                }
+                
+                // Find all deposits on the page - exactly as in the original code
+                function findAllDeposits() {
+                    const containers = findDepositContainers();
+                    console.log(`Processing ${containers.length} deposit containers`);
+                    return containers.map((container, index) => 
+                        extractDepositInfo(container, index + 1)
+                    );
+                }
+                
+                // Run the deposit finder
+                try {
+                    // Capture page info for debugging
+                    const pageTitle = document.title;
+                    const url = window.location.href;
+                    const pageContent = document.body.textContent;
+                    const depositParas = document.querySelectorAll('p');
+                    console.log(`Page title: ${pageTitle}`);
+                    console.log(`URL: ${url}`);
+                    console.log(`Found ${depositParas.length} paragraphs in total`);
+                    
+                    // Count how many paragraphs contain the word "Deposit"
+                    const depositTextCount = Array.from(depositParas).filter(p => 
+                        p.textContent.includes('Deposit')
+                    ).length;
+                    console.log(`Found ${depositTextCount} paragraphs containing "Deposit"`);
+                    
+                    // Find all deposits
+                    const deposits = findAllDeposits();
+                    console.log(`Found ${deposits.length} deposits total`);
+                    
+                    return {
+                        success: true,
+                        deposits: deposits,
+                        debug: {
+                            title: pageTitle,
+                            url: url,
+                            depositTextCount,
+                            totalParagraphs: depositParas.length
+                        }
+                    };
+                } catch (error) {
+                    console.error("Error finding deposits:", error);
+                    return {
+                        success: false,
+                        error: error.toString()
+                    };
+                }
+            })();
+            
+            return extractorResult;
             """
             
             # Execute the script
@@ -668,7 +663,7 @@ return extractorResult;
             return []
     
     def extract_deposit_details(self, deposit):
-        """Extract detailed information for a single deposit."""
+        """Extract detailed information for a single deposit with improved refund detection."""
         logger.debug(f"Extracting details for deposit #{deposit['index']}: {deposit.get('currency', '')}{deposit.get('amount', '')}")
         
         detailed_deposit = {
@@ -678,6 +673,7 @@ return extractorResult;
             "depositStatus": deposit.get("depositStatus", ""),
             "hasBeenReturned": deposit.get("hasBeenReturned", False),
             "returnStatus": deposit.get("returnStatus", ""),
+            "refundState": deposit.get("refundState", ""),
             "billPayer": "",
             "formAmount": "",
             "depositDate": "",
@@ -805,6 +801,88 @@ return extractorResult;
                     detailed_deposit["alreadyPaid"] = already_paid_checkbox.is_selected()
                 except NoSuchElementException:
                     logger.debug(f"Already paid checkbox not found for deposit #{deposit['index']}")
+                
+                # NEW: DETECT REFUND STATE FROM MODAL
+                try:
+                    # Get the modal HTML
+                    modal_html = modal.get_attribute("outerHTML")
+                    
+                    # Run the 4-state detection JavaScript
+                    refund_state_result = self.driver.execute_script("""
+                        var modal = arguments[0];
+                        
+                        // Look for Return button text (standalone)
+                        var hasReturnButton = Array.from(modal.querySelectorAll('button'))
+                            .some(btn => btn.textContent.trim() === 'Return' && 
+                                  !btn.querySelector('*')); // Direct text, no child elements
+                        
+                        // Look for Delete button text (in span)
+                        var hasDeleteButton = Array.from(modal.querySelectorAll('span'))
+                            .some(span => span.textContent.trim() === 'Delete');
+                        
+                        // Look for Cancel Return button text (in span)
+                        var hasCancelReturnButton = Array.from(modal.querySelectorAll('span'))
+                            .some(span => span.textContent.trim() === 'Cancel Return');
+                        
+                        // Check for Already Paid checkbox
+                        var alreadyPaidCheckbox = modal.querySelector('input[name="alreadyPaid"]');
+                        var alreadyPaidChecked = alreadyPaidCheckbox ? 
+                            (alreadyPaidCheckbox.checked || 
+                             alreadyPaidCheckbox.getAttribute('checked') === 'checked') : false;
+                        
+                        // Apply the 4-state logic
+                        var refundState = '';
+                        var hasBeenReturned = false;
+                        
+                        // State 4: Awaiting refund - has Cancel Return button
+                        if (hasCancelReturnButton) {
+                            refundState = 'Awaiting refund';
+                            hasBeenReturned = false;
+                        }
+                        // State 1: Not refunded - has Return/Delete buttons and Already Paid
+                        else if (hasReturnButton && hasDeleteButton && alreadyPaidChecked) {
+                            refundState = 'Not refunded (paid)';
+                            hasBeenReturned = false;
+                        }
+                        // State 2: Not refunded, not paid - has Delete button but no Already Paid
+                        else if (hasDeleteButton && !alreadyPaidChecked) {
+                            refundState = 'Not refunded (not paid)';
+                            hasBeenReturned = false;
+                        }
+                        // State 3: Already refunded - no buttons or no actions
+                        else if (!hasReturnButton && !hasDeleteButton) {
+                            refundState = 'Refunded';
+                            hasBeenReturned = true;
+                        }
+                        // Default - assumes not refunded
+                        else {
+                            refundState = 'Unknown state';
+                            hasBeenReturned = false;
+                        }
+                        
+                        return {
+                            hasBeenReturned: hasBeenReturned,
+                            refundState: refundState,
+                            debug: {
+                                hasReturnButton: hasReturnButton,
+                                hasDeleteButton: hasDeleteButton,
+                                hasCancelReturnButton: hasCancelReturnButton,
+                                alreadyPaidChecked: alreadyPaidChecked
+                            }
+                        };
+                    """, modal)
+                    
+                    # Update the deposit with the refund state information
+                    if refund_state_result:
+                        detailed_deposit["hasBeenReturned"] = refund_state_result.get("hasBeenReturned", False)
+                        detailed_deposit["refundState"] = refund_state_result.get("refundState", "Unknown")
+                        
+                        debug_info = refund_state_result.get("debug", {})
+                        logger.debug(f"Refund detection details - Return button: {debug_info.get('hasReturnButton')}, Delete button: {debug_info.get('hasDeleteButton')}, Cancel Return button: {debug_info.get('hasCancelReturnButton')}, Already Paid: {debug_info.get('alreadyPaidChecked')}")
+                
+                except Exception as e:
+                    logger.error(f"Error detecting refund state: {str(e)}")
+                    detailed_deposit["errorMessage"] += f" Refund detection error: {str(e)}"
                 
             except Exception as e:
                 logger.error(f"Error extracting modal data for deposit #{deposit['index']}: {str(e)}")

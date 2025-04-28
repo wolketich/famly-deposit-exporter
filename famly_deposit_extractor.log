@@ -1,42 +1,464 @@
-2025-04-28 17:19:50,388 - INFO - Setting up WebDriver...
-2025-04-28 17:19:50,388 - INFO - ====== WebDriver manager ======
-2025-04-28 17:19:50,619 - INFO - Get LATEST chromedriver version for google-chrome
-2025-04-28 17:19:50,743 - INFO - Get LATEST chromedriver version for google-chrome
-2025-04-28 17:19:50,827 - INFO - Driver [/Users/walkcat/.wdm/drivers/chromedriver/mac64/135.0.7049.114/chromedriver-mac-arm64/chromedriver] found in cache
-2025-04-28 17:19:51,884 - INFO - WebDriver setup complete
-2025-04-28 17:19:51,887 - INFO - Found 6 children in CSV file
-2025-04-28 17:19:51,887 - INFO - Logging in to Famly...
-2025-04-28 17:19:54,402 - INFO - Login successful
-2025-04-28 17:19:54,403 - INFO - Processing child 1/6: Aafiah Khan (ID: 9cfe983a-f949-4c99-8a09-13a42de6d905)
-2025-04-28 17:19:54,405 - INFO - Navigating to child profile: Aafiah Khan (ID: 9cfe983a-f949-4c99-8a09-13a42de6d905)
-2025-04-28 17:19:54,405 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/9cfe983a-f949-4c99-8a09-13a42de6d905/plansAndInvoices
-2025-04-28 17:19:54,412 - INFO - Waiting 3 seconds for initial page load...
-2025-04-28 17:19:57,429 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
-2025-04-28 17:19:57,735 - INFO - Finding deposits using robust deposit finder...
-2025-04-28 17:19:58,071 - INFO - Found 8 deposits
-2025-04-28 17:19:58,071 - INFO - Page title: Famly | Child profile
-2025-04-28 17:19:58,071 - INFO - Found 1 paragraphs containing 'Deposit'
-2025-04-28 17:19:58,071 - INFO - Found 1 paragraphs containing 'Return'
-2025-04-28 17:19:58,071 - INFO - Found 3 returned deposits
-2025-04-28 17:19:58,071 - INFO - Extracting details for 8 deposits...
-2025-04-28 17:19:59,166 - WARNING - Modal not detected for deposit #1 (attempt 1)
-2025-04-28 17:20:01,210 - WARNING - Modal not detected for deposit #1 (attempt 2)
-2025-04-28 17:20:03,268 - WARNING - Modal not detected for deposit #1 (attempt 3)
-2025-04-28 17:20:03,268 - WARNING - Modal not found, but will try to extract data anyway
-2025-04-28 17:20:03,913 - WARNING - Modal may still be open for deposit #1
-2025-04-28 17:20:07,260 - WARNING - Modal not detected for deposit #3 (attempt 1)
-2025-04-28 17:20:09,329 - WARNING - Modal not detected for deposit #3 (attempt 2)
-2025-04-28 17:20:11,390 - WARNING - Modal not detected for deposit #3 (attempt 3)
-2025-04-28 17:20:11,390 - WARNING - Modal not found, but will try to extract data anyway
-2025-04-28 17:20:12,012 - WARNING - Modal may still be open for deposit #3
-2025-04-28 17:20:22,273 - INFO - Extracted details for 8 deposits
-2025-04-28 17:20:22,273 - INFO - Exporting data to CSV: output/Aafiah_Khan_9cfe983a-f949-4c99-8a09-13a42de6d905_deposits.csv
-2025-04-28 17:20:22,279 - INFO - Successfully exported 8 deposits to output/Aafiah_Khan_9cfe983a-f949-4c99-8a09-13a42de6d905_deposits.csv
-2025-04-28 17:20:24,533 - INFO - Batch processing completed in 0.54 minutes. Summary saved to output/summary_20250428_172024.json
-2025-04-28 17:20:24,533 - INFO - Processed 6 children: 0 successful, 0 failed
-2025-04-28 17:20:24,533 - INFO - Total deposits extracted: 0 (including 0 returned deposits)
-2025-04-28 17:20:24,533 - INFO - Cleaning up resources...
-2025-04-28 17:20:24,540 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1053e2720>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/b9113d8320901d1cdfc5969a00d52257
-2025-04-28 17:20:24,540 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10544b0e0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/b9113d8320901d1cdfc5969a00d52257
-2025-04-28 17:20:24,541 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10544b2c0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/b9113d8320901d1cdfc5969a00d52257
-2025-04-28 17:20:24,572 - INFO - Cleanup complete
+2025-04-28 20:46:38,345 - INFO - Setting up WebDriver...
+2025-04-28 20:46:38,346 - INFO - ====== WebDriver manager ======
+2025-04-28 20:46:38,790 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 20:46:38,925 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 20:46:39,026 - INFO - Driver [/Users/walkcat/.wdm/drivers/chromedriver/mac64/135.0.7049.114/chromedriver-mac-arm64/chromedriver] found in cache
+2025-04-28 20:46:40,864 - INFO - WebDriver setup complete
+2025-04-28 20:46:40,914 - INFO - Found 6 children in CSV file
+2025-04-28 20:46:40,914 - INFO - Logging in to Famly...
+2025-04-28 20:46:44,072 - INFO - Login successful
+2025-04-28 20:46:44,072 - INFO - Processing child 1/6: Aafiah Khan (ID: 9cfe983a-f949-4c99-8a09-13a42de6d905)
+2025-04-28 20:46:44,158 - INFO - Navigating to child profile: Aafiah Khan (ID: 9cfe983a-f949-4c99-8a09-13a42de6d905)
+2025-04-28 20:46:44,159 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/9cfe983a-f949-4c99-8a09-13a42de6d905/plansAndInvoices
+2025-04-28 20:46:44,209 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 20:46:47,229 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 20:46:47,535 - INFO - Finding deposits using robust deposit finder...
+2025-04-28 20:46:47,870 - INFO - Found 1 deposits
+2025-04-28 20:46:47,870 - INFO - Page title: Famly | Child profile
+2025-04-28 20:46:47,870 - INFO - Found 1 paragraphs containing 'Deposit'
+2025-04-28 20:46:47,870 - INFO - Found 1 paragraphs containing 'Return'
+2025-04-28 20:46:47,870 - INFO - Found 1 returned deposits
+2025-04-28 20:46:47,870 - INFO - Extracting details for 1 deposits...
+2025-04-28 20:46:49,937 - INFO - Extracted details for 1 deposits
+2025-04-28 20:46:49,937 - INFO - Exporting data to CSV: output/Aafiah_Khan_9cfe983a-f949-4c99-8a09-13a42de6d905_deposits.csv
+2025-04-28 20:46:49,969 - INFO - Successfully exported 1 deposits to output/Aafiah_Khan_9cfe983a-f949-4c99-8a09-13a42de6d905_deposits.csv
+2025-04-28 20:46:52,975 - INFO - Processing child 2/6: Aaryan Bindlish (ID: d5852555-c9eb-44d8-88eb-0b0087e88b5a)
+2025-04-28 20:46:53,014 - INFO - Navigating to child profile: Aaryan Bindlish (ID: d5852555-c9eb-44d8-88eb-0b0087e88b5a)
+2025-04-28 20:46:53,019 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/d5852555-c9eb-44d8-88eb-0b0087e88b5a/plansAndInvoices
+2025-04-28 20:46:53,085 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 20:46:56,099 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 20:46:56,404 - INFO - Finding deposits using robust deposit finder...
+2025-04-28 20:46:56,740 - ERROR - JavaScript error: ReferenceError: hasBeenReturned is not defined
+2025-04-28 20:46:59,745 - INFO - Processing child 3/6: Abdulrahman Eisa (ID: e7d47f8b-5d50-4355-8752-57c4bbc76181)
+2025-04-28 20:46:59,753 - INFO - Navigating to child profile: Abdulrahman Eisa (ID: e7d47f8b-5d50-4355-8752-57c4bbc76181)
+2025-04-28 20:46:59,754 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/e7d47f8b-5d50-4355-8752-57c4bbc76181/plansAndInvoices
+2025-04-28 20:46:59,806 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 20:47:02,826 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 20:47:03,128 - INFO - Finding deposits using robust deposit finder...
+2025-04-28 20:47:03,451 - ERROR - JavaScript error: ReferenceError: hasBeenReturned is not defined
+2025-04-28 20:47:06,457 - INFO - Processing child 4/6: Ada Holland (ID: 249acd47-ab38-4ba9-9684-b847408d90ca)
+2025-04-28 20:47:06,460 - INFO - Navigating to child profile: Ada Holland (ID: 249acd47-ab38-4ba9-9684-b847408d90ca)
+2025-04-28 20:47:06,461 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/249acd47-ab38-4ba9-9684-b847408d90ca/plansAndInvoices
+2025-04-28 20:47:06,503 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 20:47:09,523 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 20:47:09,824 - INFO - Finding deposits using robust deposit finder...
+2025-04-28 20:47:10,152 - ERROR - JavaScript error: ReferenceError: hasBeenReturned is not defined
+2025-04-28 20:47:13,158 - INFO - Processing child 5/6: Adam John Nikkel (ID: 5c56c6fa-e6ff-4568-840b-b2e043c2fa32)
+2025-04-28 20:47:13,164 - INFO - Navigating to child profile: Adam John Nikkel (ID: 5c56c6fa-e6ff-4568-840b-b2e043c2fa32)
+2025-04-28 20:47:13,164 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/5c56c6fa-e6ff-4568-840b-b2e043c2fa32/plansAndInvoices
+2025-04-28 20:47:13,218 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 20:47:16,232 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 20:47:16,537 - INFO - Finding deposits using robust deposit finder...
+2025-04-28 20:47:17,846 - INFO - Found 1 deposits
+2025-04-28 20:47:17,846 - INFO - Page title: Famly | Child profile
+2025-04-28 20:47:17,846 - INFO - Found 1 paragraphs containing 'Deposit'
+2025-04-28 20:47:17,846 - INFO - Found 1 paragraphs containing 'Return'
+2025-04-28 20:47:17,846 - INFO - Found 1 returned deposits
+2025-04-28 20:47:17,847 - INFO - Extracting details for 1 deposits...
+2025-04-28 20:47:19,858 - INFO - Extracted details for 1 deposits
+2025-04-28 20:47:19,858 - INFO - Exporting data to CSV: output/Adam_John_Nikkel_5c56c6fa-e6ff-4568-840b-b2e043c2fa32_deposits.csv
+2025-04-28 20:47:19,864 - INFO - Successfully exported 1 deposits to output/Adam_John_Nikkel_5c56c6fa-e6ff-4568-840b-b2e043c2fa32_deposits.csv
+2025-04-28 20:47:22,870 - INFO - Processing child 6/6: Adam Mularczyk (ID: 038f24f6-14e0-42dc-9b8c-0aba81206d89)
+2025-04-28 20:47:22,877 - INFO - Navigating to child profile: Adam Mularczyk (ID: 038f24f6-14e0-42dc-9b8c-0aba81206d89)
+2025-04-28 20:47:22,877 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/038f24f6-14e0-42dc-9b8c-0aba81206d89/plansAndInvoices
+2025-04-28 20:47:22,916 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 20:47:25,939 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 20:47:26,243 - INFO - Finding deposits using robust deposit finder...
+2025-04-28 20:47:26,579 - ERROR - JavaScript error: ReferenceError: hasBeenReturned is not defined
+2025-04-28 20:47:26,582 - INFO - Batch processing completed in 0.76 minutes. Summary saved to output/summary_20250428_204726.json
+2025-04-28 20:47:26,582 - INFO - Processed 6 children: 6 successful, 0 failed
+2025-04-28 20:47:26,582 - INFO - Total deposits extracted: 2 (including 2 returned deposits)
+2025-04-28 20:47:26,582 - INFO - Cleaning up resources...
+2025-04-28 20:47:26,713 - INFO - Cleanup complete
+2025-04-28 20:51:58,441 - INFO - Setting up WebDriver...
+2025-04-28 20:51:58,441 - INFO - ====== WebDriver manager ======
+2025-04-28 20:51:58,709 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 20:51:58,803 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 20:51:58,933 - INFO - Driver [/Users/walkcat/.wdm/drivers/chromedriver/mac64/135.0.7049.114/chromedriver-mac-arm64/chromedriver] found in cache
+2025-04-28 20:51:59,989 - INFO - WebDriver setup complete
+2025-04-28 20:51:59,996 - INFO - Found 6 children in CSV file
+2025-04-28 20:51:59,996 - INFO - Logging in to Famly...
+2025-04-28 20:52:02,999 - INFO - Login successful
+2025-04-28 20:52:03,000 - INFO - Loaded state: 6 children already processed
+2025-04-28 20:52:03,000 - INFO - Resuming batch: 6 children already processed, 0 remaining
+2025-04-28 20:52:03,000 - INFO - Batch processing completed in 0.05 minutes. Summary saved to output/summary_20250428_205203.json
+2025-04-28 20:52:03,000 - INFO - Processed 6 children: 0 successful, 0 failed
+2025-04-28 20:52:03,000 - INFO - Total deposits extracted: 0 (including 0 returned deposits)
+2025-04-28 20:52:03,000 - INFO - Cleaning up resources...
+2025-04-28 20:52:03,081 - INFO - Cleanup complete
+2025-04-28 20:52:13,979 - INFO - Setting up WebDriver...
+2025-04-28 20:52:13,979 - INFO - ====== WebDriver manager ======
+2025-04-28 20:52:14,226 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 20:52:14,326 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 20:52:14,429 - INFO - Driver [/Users/walkcat/.wdm/drivers/chromedriver/mac64/135.0.7049.114/chromedriver-mac-arm64/chromedriver] found in cache
+2025-04-28 20:52:15,357 - INFO - WebDriver setup complete
+2025-04-28 20:52:15,361 - INFO - Found 6 children in CSV file
+2025-04-28 20:52:15,361 - INFO - Logging in to Famly...
+2025-04-28 20:52:18,297 - INFO - Login successful
+2025-04-28 20:52:18,297 - INFO - Loaded state: 6 children already processed
+2025-04-28 20:52:18,297 - INFO - Resuming batch: 6 children already processed, 0 remaining
+2025-04-28 20:52:18,298 - INFO - Batch processing completed in 0.05 minutes. Summary saved to output/summary_20250428_205218.json
+2025-04-28 20:52:18,298 - INFO - Processed 6 children: 0 successful, 0 failed
+2025-04-28 20:52:18,298 - INFO - Total deposits extracted: 0 (including 0 returned deposits)
+2025-04-28 20:52:18,298 - INFO - Cleaning up resources...
+2025-04-28 20:52:18,383 - INFO - Cleanup complete
+2025-04-28 20:53:24,417 - INFO - Setting up WebDriver...
+2025-04-28 20:53:24,418 - INFO - ====== WebDriver manager ======
+2025-04-28 20:53:24,660 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 20:53:24,751 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 20:53:24,884 - INFO - Driver [/Users/walkcat/.wdm/drivers/chromedriver/mac64/135.0.7049.114/chromedriver-mac-arm64/chromedriver] found in cache
+2025-04-28 20:53:26,020 - INFO - WebDriver setup complete
+2025-04-28 20:53:26,023 - INFO - Found 6 children in CSV file
+2025-04-28 20:53:26,023 - INFO - Logging in to Famly...
+2025-04-28 20:53:28,568 - INFO - Login successful
+2025-04-28 20:53:28,568 - INFO - Loaded state: 6 children already processed
+2025-04-28 20:53:28,568 - INFO - Resuming batch: 6 children already processed, 0 remaining
+2025-04-28 20:53:28,568 - INFO - Batch processing completed in 0.04 minutes. Summary saved to output/summary_20250428_205328.json
+2025-04-28 20:53:28,568 - INFO - Processed 6 children: 0 successful, 0 failed
+2025-04-28 20:53:28,568 - INFO - Total deposits extracted: 0 (including 0 returned deposits)
+2025-04-28 20:53:28,568 - INFO - Cleaning up resources...
+2025-04-28 20:53:28,655 - INFO - Cleanup complete
+2025-04-28 20:53:37,036 - INFO - Setting up WebDriver...
+2025-04-28 20:53:37,036 - INFO - ====== WebDriver manager ======
+2025-04-28 20:53:37,269 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 20:53:37,354 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 20:53:37,438 - INFO - Driver [/Users/walkcat/.wdm/drivers/chromedriver/mac64/135.0.7049.114/chromedriver-mac-arm64/chromedriver] found in cache
+2025-04-28 20:53:38,386 - INFO - WebDriver setup complete
+2025-04-28 20:53:38,389 - INFO - Found 6 children in CSV file
+2025-04-28 20:53:38,389 - INFO - Logging in to Famly...
+2025-04-28 20:53:41,336 - INFO - Login successful
+2025-04-28 20:53:41,336 - INFO - Loaded state: 6 children already processed
+2025-04-28 20:53:41,336 - INFO - Resuming batch: 6 children already processed, 0 remaining
+2025-04-28 20:53:41,337 - INFO - Batch processing completed in 0.05 minutes. Summary saved to output/summary_20250428_205341.json
+2025-04-28 20:53:41,337 - INFO - Processed 6 children: 0 successful, 0 failed
+2025-04-28 20:53:41,337 - INFO - Total deposits extracted: 0 (including 0 returned deposits)
+2025-04-28 20:53:41,337 - INFO - Cleaning up resources...
+2025-04-28 20:53:41,428 - INFO - Cleanup complete
+2025-04-28 20:53:56,676 - INFO - Setting up WebDriver...
+2025-04-28 20:53:56,676 - INFO - ====== WebDriver manager ======
+2025-04-28 20:53:56,907 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 20:53:57,056 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 20:53:57,143 - INFO - Driver [/Users/walkcat/.wdm/drivers/chromedriver/mac64/135.0.7049.114/chromedriver-mac-arm64/chromedriver] found in cache
+2025-04-28 20:53:58,096 - INFO - WebDriver setup complete
+2025-04-28 20:53:58,099 - INFO - Found 6 children in CSV file
+2025-04-28 20:53:58,099 - INFO - Logging in to Famly...
+2025-04-28 20:54:00,518 - INFO - Login successful
+2025-04-28 20:54:00,518 - INFO - Loaded state: 6 children already processed
+2025-04-28 20:54:00,518 - INFO - Resuming batch: 6 children already processed, 0 remaining
+2025-04-28 20:54:00,519 - INFO - Batch processing completed in 0.04 minutes. Summary saved to output/summary_20250428_205400.json
+2025-04-28 20:54:00,519 - INFO - Processed 6 children: 0 successful, 0 failed
+2025-04-28 20:54:00,519 - INFO - Total deposits extracted: 0 (including 0 returned deposits)
+2025-04-28 20:54:00,519 - INFO - Cleaning up resources...
+2025-04-28 20:54:00,604 - INFO - Cleanup complete
+2025-04-28 20:54:54,937 - INFO - Setting up WebDriver...
+2025-04-28 20:54:54,937 - INFO - ====== WebDriver manager ======
+2025-04-28 20:54:55,175 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 20:54:55,289 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 20:54:55,378 - INFO - Driver [/Users/walkcat/.wdm/drivers/chromedriver/mac64/135.0.7049.114/chromedriver-mac-arm64/chromedriver] found in cache
+2025-04-28 20:54:56,409 - INFO - WebDriver setup complete
+2025-04-28 20:54:56,412 - INFO - Found 6 children in CSV file
+2025-04-28 20:54:56,412 - INFO - Logging in to Famly...
+2025-04-28 20:54:58,842 - INFO - Login successful
+2025-04-28 20:54:58,842 - INFO - Processing child 1/6: Aafiah Khan (ID: 9cfe983a-f949-4c99-8a09-13a42de6d905)
+2025-04-28 20:54:58,845 - INFO - Navigating to child profile: Aafiah Khan (ID: 9cfe983a-f949-4c99-8a09-13a42de6d905)
+2025-04-28 20:54:58,845 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/9cfe983a-f949-4c99-8a09-13a42de6d905/plansAndInvoices
+2025-04-28 20:54:58,851 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 20:55:01,879 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 20:55:02,185 - INFO - Finding deposits using robust deposit finder...
+2025-04-28 20:55:02,528 - ERROR - JavaScript error: ReferenceError: DOMUtils is not defined
+2025-04-28 20:55:05,534 - INFO - Processing child 2/6: Aaryan Bindlish (ID: d5852555-c9eb-44d8-88eb-0b0087e88b5a)
+2025-04-28 20:55:05,542 - INFO - Navigating to child profile: Aaryan Bindlish (ID: d5852555-c9eb-44d8-88eb-0b0087e88b5a)
+2025-04-28 20:55:05,542 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/d5852555-c9eb-44d8-88eb-0b0087e88b5a/plansAndInvoices
+2025-04-28 20:55:05,580 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 20:55:07,875 - INFO - Batch processing completed in 0.19 minutes. Summary saved to output/summary_20250428_205507.json
+2025-04-28 20:55:07,876 - INFO - Processed 6 children: 0 successful, 0 failed
+2025-04-28 20:55:07,876 - INFO - Total deposits extracted: 0 (including 0 returned deposits)
+2025-04-28 20:55:07,876 - INFO - Cleaning up resources...
+2025-04-28 20:55:07,877 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectionResetError(54, 'Connection reset by peer')': /session/627d99097267d6494162b5de15bb8dcb
+2025-04-28 20:55:07,888 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1052ef7a0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/627d99097267d6494162b5de15bb8dcb
+2025-04-28 20:55:07,889 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1052ef170>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/627d99097267d6494162b5de15bb8dcb
+2025-04-28 20:55:07,926 - INFO - Cleanup complete
+2025-04-28 20:55:12,883 - INFO - Setting up WebDriver...
+2025-04-28 20:55:12,883 - INFO - ====== WebDriver manager ======
+2025-04-28 20:55:13,107 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 20:55:13,199 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 20:55:13,337 - INFO - Driver [/Users/walkcat/.wdm/drivers/chromedriver/mac64/135.0.7049.114/chromedriver-mac-arm64/chromedriver] found in cache
+2025-04-28 20:55:14,279 - INFO - WebDriver setup complete
+2025-04-28 20:55:14,282 - INFO - Found 6 children in CSV file
+2025-04-28 20:55:14,282 - INFO - Logging in to Famly...
+2025-04-28 20:55:17,358 - INFO - Login successful
+2025-04-28 20:55:17,358 - INFO - Loaded state: 1 children already processed
+2025-04-28 20:55:17,358 - INFO - Resuming batch: 1 children already processed, 5 remaining
+2025-04-28 20:55:17,358 - INFO - Processing child 1/5: Aaryan Bindlish (ID: d5852555-c9eb-44d8-88eb-0b0087e88b5a)
+2025-04-28 20:55:17,361 - INFO - Navigating to child profile: Aaryan Bindlish (ID: d5852555-c9eb-44d8-88eb-0b0087e88b5a)
+2025-04-28 20:55:17,361 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/d5852555-c9eb-44d8-88eb-0b0087e88b5a/plansAndInvoices
+2025-04-28 20:55:17,369 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 20:55:20,398 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 20:55:20,704 - INFO - Finding deposits using robust deposit finder...
+2025-04-28 20:55:21,046 - INFO - Found 1 deposits
+2025-04-28 20:55:21,047 - INFO - Page title: Famly | Child profile
+2025-04-28 20:55:21,047 - INFO - Found 1 paragraphs containing 'Deposit'
+2025-04-28 20:55:21,047 - INFO - Found 0 paragraphs containing 'Return'
+2025-04-28 20:55:21,047 - INFO - Found 1 returned deposits
+2025-04-28 20:55:21,047 - INFO - Extracting details for 1 deposits...
+2025-04-28 20:55:23,094 - INFO - Extracted details for 1 deposits
+2025-04-28 20:55:23,094 - INFO - Exporting data to CSV: output/Aaryan_Bindlish_d5852555-c9eb-44d8-88eb-0b0087e88b5a_deposits.csv
+2025-04-28 20:55:23,098 - INFO - Successfully exported 1 deposits to output/Aaryan_Bindlish_d5852555-c9eb-44d8-88eb-0b0087e88b5a_deposits.csv
+2025-04-28 20:55:26,104 - INFO - Processing child 2/5: Abdulrahman Eisa (ID: e7d47f8b-5d50-4355-8752-57c4bbc76181)
+2025-04-28 20:55:26,124 - INFO - Navigating to child profile: Abdulrahman Eisa (ID: e7d47f8b-5d50-4355-8752-57c4bbc76181)
+2025-04-28 20:55:26,124 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/e7d47f8b-5d50-4355-8752-57c4bbc76181/plansAndInvoices
+2025-04-28 20:55:26,164 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 20:55:29,177 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 20:55:29,482 - INFO - Finding deposits using robust deposit finder...
+2025-04-28 20:55:29,827 - INFO - Found 1 deposits
+2025-04-28 20:55:29,827 - INFO - Page title: Famly | Child profile
+2025-04-28 20:55:29,827 - INFO - Found 1 paragraphs containing 'Deposit'
+2025-04-28 20:55:29,827 - INFO - Found 0 paragraphs containing 'Return'
+2025-04-28 20:55:29,828 - INFO - Found 1 returned deposits
+2025-04-28 20:55:29,828 - INFO - Extracting details for 1 deposits...
+2025-04-28 20:55:31,823 - INFO - Extracted details for 1 deposits
+2025-04-28 20:55:31,824 - INFO - Exporting data to CSV: output/Abdulrahman_Eisa_e7d47f8b-5d50-4355-8752-57c4bbc76181_deposits.csv
+2025-04-28 20:55:31,828 - INFO - Successfully exported 1 deposits to output/Abdulrahman_Eisa_e7d47f8b-5d50-4355-8752-57c4bbc76181_deposits.csv
+2025-04-28 20:55:34,834 - INFO - Processing child 3/5: Ada Holland (ID: 249acd47-ab38-4ba9-9684-b847408d90ca)
+2025-04-28 20:55:34,843 - INFO - Navigating to child profile: Ada Holland (ID: 249acd47-ab38-4ba9-9684-b847408d90ca)
+2025-04-28 20:55:34,843 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/249acd47-ab38-4ba9-9684-b847408d90ca/plansAndInvoices
+2025-04-28 20:55:34,882 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 20:55:37,907 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 20:55:38,209 - INFO - Finding deposits using robust deposit finder...
+2025-04-28 20:55:38,575 - INFO - Found 0 deposits
+2025-04-28 20:55:38,575 - INFO - Page title: Famly | Child profile
+2025-04-28 20:55:38,575 - INFO - Found 0 paragraphs containing 'Deposit'
+2025-04-28 20:55:38,575 - INFO - Found 0 paragraphs containing 'Return'
+2025-04-28 20:55:38,575 - INFO - Found 0 returned deposits
+2025-04-28 20:55:38,575 - WARNING - No deposits found with JavaScript finder
+2025-04-28 20:55:41,581 - INFO - Processing child 4/5: Adam John Nikkel (ID: 5c56c6fa-e6ff-4568-840b-b2e043c2fa32)
+2025-04-28 20:55:41,590 - INFO - Navigating to child profile: Adam John Nikkel (ID: 5c56c6fa-e6ff-4568-840b-b2e043c2fa32)
+2025-04-28 20:55:41,590 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/5c56c6fa-e6ff-4568-840b-b2e043c2fa32/plansAndInvoices
+2025-04-28 20:55:41,625 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 20:55:44,649 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 20:55:44,955 - INFO - Finding deposits using robust deposit finder...
+2025-04-28 20:55:45,298 - INFO - Found 1 deposits
+2025-04-28 20:55:45,299 - INFO - Page title: Famly | Child profile
+2025-04-28 20:55:45,299 - INFO - Found 1 paragraphs containing 'Deposit'
+2025-04-28 20:55:45,299 - INFO - Found 1 paragraphs containing 'Return'
+2025-04-28 20:55:45,299 - INFO - Found 1 returned deposits
+2025-04-28 20:55:45,299 - INFO - Extracting details for 1 deposits...
+2025-04-28 20:55:47,299 - INFO - Extracted details for 1 deposits
+2025-04-28 20:55:47,299 - INFO - Exporting data to CSV: output/Adam_John_Nikkel_5c56c6fa-e6ff-4568-840b-b2e043c2fa32_deposits.csv
+2025-04-28 20:55:47,304 - INFO - Successfully exported 1 deposits to output/Adam_John_Nikkel_5c56c6fa-e6ff-4568-840b-b2e043c2fa32_deposits.csv
+2025-04-28 20:55:50,310 - INFO - Processing child 5/5: Adam Mularczyk (ID: 038f24f6-14e0-42dc-9b8c-0aba81206d89)
+2025-04-28 20:55:50,319 - INFO - Navigating to child profile: Adam Mularczyk (ID: 038f24f6-14e0-42dc-9b8c-0aba81206d89)
+2025-04-28 20:55:50,319 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/038f24f6-14e0-42dc-9b8c-0aba81206d89/plansAndInvoices
+2025-04-28 20:55:50,356 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 20:55:53,381 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 20:55:53,687 - INFO - Finding deposits using robust deposit finder...
+2025-04-28 20:55:54,028 - INFO - Found 1 deposits
+2025-04-28 20:55:54,028 - INFO - Page title: Famly | Child profile
+2025-04-28 20:55:54,028 - INFO - Found 1 paragraphs containing 'Deposit'
+2025-04-28 20:55:54,028 - INFO - Found 0 paragraphs containing 'Return'
+2025-04-28 20:55:54,028 - INFO - Found 1 returned deposits
+2025-04-28 20:55:54,028 - INFO - Extracting details for 1 deposits...
+2025-04-28 20:55:56,047 - INFO - Extracted details for 1 deposits
+2025-04-28 20:55:56,048 - INFO - Exporting data to CSV: output/Adam_Mularczyk_038f24f6-14e0-42dc-9b8c-0aba81206d89_deposits.csv
+2025-04-28 20:55:56,052 - INFO - Successfully exported 1 deposits to output/Adam_Mularczyk_038f24f6-14e0-42dc-9b8c-0aba81206d89_deposits.csv
+2025-04-28 20:55:56,059 - INFO - Batch processing completed in 0.7 minutes. Summary saved to output/summary_20250428_205556.json
+2025-04-28 20:55:56,059 - INFO - Processed 6 children: 5 successful, 0 failed
+2025-04-28 20:55:56,059 - INFO - Total deposits extracted: 4 (including 4 returned deposits)
+2025-04-28 20:55:56,059 - INFO - Cleaning up resources...
+2025-04-28 20:55:56,172 - INFO - Cleanup complete
+2025-04-28 21:00:25,553 - INFO - Setting up WebDriver...
+2025-04-28 21:00:25,554 - INFO - ====== WebDriver manager ======
+2025-04-28 21:00:25,804 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 21:00:25,923 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 21:00:26,031 - INFO - Driver [/Users/walkcat/.wdm/drivers/chromedriver/mac64/135.0.7049.114/chromedriver-mac-arm64/chromedriver] found in cache
+2025-04-28 21:00:27,057 - INFO - WebDriver setup complete
+2025-04-28 21:00:27,060 - INFO - Found 6 children in CSV file
+2025-04-28 21:00:27,060 - INFO - Logging in to Famly...
+2025-04-28 21:00:30,033 - INFO - Login successful
+2025-04-28 21:00:30,033 - INFO - Processing child 1/6: Aafiah Khan (ID: 9cfe983a-f949-4c99-8a09-13a42de6d905)
+2025-04-28 21:00:30,036 - INFO - Navigating to child profile: Aafiah Khan (ID: 9cfe983a-f949-4c99-8a09-13a42de6d905)
+2025-04-28 21:00:30,036 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/9cfe983a-f949-4c99-8a09-13a42de6d905/plansAndInvoices
+2025-04-28 21:00:30,043 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 21:00:33,064 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 21:00:33,368 - INFO - Finding deposits using robust deposit finder...
+2025-04-28 21:00:33,700 - INFO - Found 1 deposits
+2025-04-28 21:00:33,701 - INFO - Page title: Famly | Child profile
+2025-04-28 21:00:33,701 - INFO - Found 1 paragraphs containing 'Deposit'
+2025-04-28 21:00:33,701 - INFO - Found 1 paragraphs containing 'Return'
+2025-04-28 21:00:33,701 - INFO - Found 1 returned deposits
+2025-04-28 21:00:33,701 - INFO - Extracting details for 1 deposits...
+2025-04-28 21:00:35,739 - INFO - Extracted details for 1 deposits
+2025-04-28 21:00:35,740 - INFO - Exporting data to CSV: output/Aafiah_Khan_9cfe983a-f949-4c99-8a09-13a42de6d905_deposits.csv
+2025-04-28 21:00:35,743 - INFO - Successfully exported 1 deposits to output/Aafiah_Khan_9cfe983a-f949-4c99-8a09-13a42de6d905_deposits.csv
+2025-04-28 21:00:38,749 - INFO - Processing child 2/6: Aaryan Bindlish (ID: d5852555-c9eb-44d8-88eb-0b0087e88b5a)
+2025-04-28 21:00:38,764 - INFO - Navigating to child profile: Aaryan Bindlish (ID: d5852555-c9eb-44d8-88eb-0b0087e88b5a)
+2025-04-28 21:00:38,764 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/d5852555-c9eb-44d8-88eb-0b0087e88b5a/plansAndInvoices
+2025-04-28 21:00:38,801 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 21:00:41,824 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 21:00:42,130 - INFO - Finding deposits using robust deposit finder...
+2025-04-28 21:00:42,476 - INFO - Found 1 deposits
+2025-04-28 21:00:42,476 - INFO - Page title: Famly | Child profile
+2025-04-28 21:00:42,476 - INFO - Found 1 paragraphs containing 'Deposit'
+2025-04-28 21:00:42,476 - INFO - Found 0 paragraphs containing 'Return'
+2025-04-28 21:00:42,476 - INFO - Found 1 returned deposits
+2025-04-28 21:00:42,476 - INFO - Extracting details for 1 deposits...
+2025-04-28 21:00:44,481 - INFO - Extracted details for 1 deposits
+2025-04-28 21:00:44,481 - INFO - Exporting data to CSV: output/Aaryan_Bindlish_d5852555-c9eb-44d8-88eb-0b0087e88b5a_deposits.csv
+2025-04-28 21:00:44,483 - INFO - Successfully exported 1 deposits to output/Aaryan_Bindlish_d5852555-c9eb-44d8-88eb-0b0087e88b5a_deposits.csv
+2025-04-28 21:00:47,489 - INFO - Processing child 3/6: Abdulrahman Eisa (ID: e7d47f8b-5d50-4355-8752-57c4bbc76181)
+2025-04-28 21:00:47,498 - INFO - Navigating to child profile: Abdulrahman Eisa (ID: e7d47f8b-5d50-4355-8752-57c4bbc76181)
+2025-04-28 21:00:47,499 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/e7d47f8b-5d50-4355-8752-57c4bbc76181/plansAndInvoices
+2025-04-28 21:00:47,538 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 21:00:50,560 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 21:00:50,865 - INFO - Finding deposits using robust deposit finder...
+2025-04-28 21:00:51,196 - INFO - Found 1 deposits
+2025-04-28 21:00:51,196 - INFO - Page title: Famly | Child profile
+2025-04-28 21:00:51,196 - INFO - Found 1 paragraphs containing 'Deposit'
+2025-04-28 21:00:51,196 - INFO - Found 0 paragraphs containing 'Return'
+2025-04-28 21:00:51,196 - INFO - Found 1 returned deposits
+2025-04-28 21:00:51,196 - INFO - Extracting details for 1 deposits...
+2025-04-28 21:00:53,179 - INFO - Extracted details for 1 deposits
+2025-04-28 21:00:53,180 - INFO - Exporting data to CSV: output/Abdulrahman_Eisa_e7d47f8b-5d50-4355-8752-57c4bbc76181_deposits.csv
+2025-04-28 21:00:53,182 - INFO - Successfully exported 1 deposits to output/Abdulrahman_Eisa_e7d47f8b-5d50-4355-8752-57c4bbc76181_deposits.csv
+2025-04-28 21:00:56,188 - INFO - Processing child 4/6: Ada Holland (ID: 249acd47-ab38-4ba9-9684-b847408d90ca)
+2025-04-28 21:00:56,199 - INFO - Navigating to child profile: Ada Holland (ID: 249acd47-ab38-4ba9-9684-b847408d90ca)
+2025-04-28 21:00:56,199 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/249acd47-ab38-4ba9-9684-b847408d90ca/plansAndInvoices
+2025-04-28 21:00:56,240 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 21:00:59,264 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 21:00:59,565 - INFO - Finding deposits using robust deposit finder...
+2025-04-28 21:00:59,890 - INFO - Found 0 deposits
+2025-04-28 21:00:59,890 - INFO - Page title: Famly | Child profile
+2025-04-28 21:00:59,890 - INFO - Found 0 paragraphs containing 'Deposit'
+2025-04-28 21:00:59,890 - INFO - Found 0 paragraphs containing 'Return'
+2025-04-28 21:00:59,890 - INFO - Found 0 returned deposits
+2025-04-28 21:00:59,890 - WARNING - No deposits found with JavaScript finder
+2025-04-28 21:01:02,896 - INFO - Processing child 5/6: Adam John Nikkel (ID: 5c56c6fa-e6ff-4568-840b-b2e043c2fa32)
+2025-04-28 21:01:02,906 - INFO - Navigating to child profile: Adam John Nikkel (ID: 5c56c6fa-e6ff-4568-840b-b2e043c2fa32)
+2025-04-28 21:01:02,906 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/5c56c6fa-e6ff-4568-840b-b2e043c2fa32/plansAndInvoices
+2025-04-28 21:01:02,950 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 21:01:05,975 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 21:01:06,279 - INFO - Finding deposits using robust deposit finder...
+2025-04-28 21:01:06,616 - INFO - Found 1 deposits
+2025-04-28 21:01:06,616 - INFO - Page title: Famly | Child profile
+2025-04-28 21:01:06,616 - INFO - Found 1 paragraphs containing 'Deposit'
+2025-04-28 21:01:06,616 - INFO - Found 1 paragraphs containing 'Return'
+2025-04-28 21:01:06,616 - INFO - Found 1 returned deposits
+2025-04-28 21:01:06,616 - INFO - Extracting details for 1 deposits...
+2025-04-28 21:01:08,640 - INFO - Extracted details for 1 deposits
+2025-04-28 21:01:08,641 - INFO - Exporting data to CSV: output/Adam_John_Nikkel_5c56c6fa-e6ff-4568-840b-b2e043c2fa32_deposits.csv
+2025-04-28 21:01:08,646 - INFO - Successfully exported 1 deposits to output/Adam_John_Nikkel_5c56c6fa-e6ff-4568-840b-b2e043c2fa32_deposits.csv
+2025-04-28 21:01:11,652 - INFO - Processing child 6/6: Adam Mularczyk (ID: 038f24f6-14e0-42dc-9b8c-0aba81206d89)
+2025-04-28 21:01:11,662 - INFO - Navigating to child profile: Adam Mularczyk (ID: 038f24f6-14e0-42dc-9b8c-0aba81206d89)
+2025-04-28 21:01:11,662 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/038f24f6-14e0-42dc-9b8c-0aba81206d89/plansAndInvoices
+2025-04-28 21:01:11,702 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 21:01:14,715 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 21:01:15,017 - INFO - Finding deposits using robust deposit finder...
+2025-04-28 21:01:15,351 - INFO - Found 1 deposits
+2025-04-28 21:01:15,351 - INFO - Page title: Famly | Child profile
+2025-04-28 21:01:15,351 - INFO - Found 1 paragraphs containing 'Deposit'
+2025-04-28 21:01:15,351 - INFO - Found 0 paragraphs containing 'Return'
+2025-04-28 21:01:15,351 - INFO - Found 1 returned deposits
+2025-04-28 21:01:15,351 - INFO - Extracting details for 1 deposits...
+2025-04-28 21:01:17,359 - INFO - Extracted details for 1 deposits
+2025-04-28 21:01:17,360 - INFO - Exporting data to CSV: output/Adam_Mularczyk_038f24f6-14e0-42dc-9b8c-0aba81206d89_deposits.csv
+2025-04-28 21:01:17,364 - INFO - Successfully exported 1 deposits to output/Adam_Mularczyk_038f24f6-14e0-42dc-9b8c-0aba81206d89_deposits.csv
+2025-04-28 21:01:17,371 - INFO - Batch processing completed in 0.84 minutes. Summary saved to output/summary_20250428_210117.json
+2025-04-28 21:01:17,371 - INFO - Processed 6 children: 6 successful, 0 failed
+2025-04-28 21:01:17,371 - INFO - Total deposits extracted: 5 (including 5 returned deposits)
+2025-04-28 21:01:17,371 - INFO - Cleaning up resources...
+2025-04-28 21:01:17,481 - INFO - Cleanup complete
+2025-04-28 21:05:44,970 - INFO - Setting up WebDriver...
+2025-04-28 21:05:44,970 - INFO - ====== WebDriver manager ======
+2025-04-28 21:05:45,203 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 21:05:45,294 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 21:05:45,391 - INFO - Driver [/Users/walkcat/.wdm/drivers/chromedriver/mac64/135.0.7049.114/chromedriver-mac-arm64/chromedriver] found in cache
+2025-04-28 21:05:46,455 - INFO - WebDriver setup complete
+2025-04-28 21:05:46,460 - INFO - Found 6 children in CSV file
+2025-04-28 21:05:46,461 - INFO - Logging in to Famly...
+2025-04-28 21:05:49,510 - INFO - Login successful
+2025-04-28 21:05:49,511 - INFO - Processing child 1/6: Aafiah Khan (ID: 9cfe983a-f949-4c99-8a09-13a42de6d905)
+2025-04-28 21:05:49,511 - INFO - Navigating to child profile: Aafiah Khan (ID: 9cfe983a-f949-4c99-8a09-13a42de6d905)
+2025-04-28 21:05:49,511 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/9cfe983a-f949-4c99-8a09-13a42de6d905/plansAndInvoices
+2025-04-28 21:05:49,516 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 21:05:52,546 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 21:05:52,853 - INFO - Finding deposits with improved 4-state refund detection...
+2025-04-28 21:05:53,190 - INFO - Found 1 deposits
+2025-04-28 21:05:53,191 - INFO - Page title: Famly | Child profile
+2025-04-28 21:05:53,191 - INFO - Found 1 paragraphs containing 'Deposit'
+2025-04-28 21:05:53,191 - INFO - Total paragraphs: 32
+2025-04-28 21:05:53,191 - INFO - Extracting details for 1 deposits...
+2025-04-28 21:05:55,197 - INFO - Extracted details for 1 deposits
+2025-04-28 21:05:55,197 - INFO - Exporting data to CSV: output/Aafiah_Khan_9cfe983a-f949-4c99-8a09-13a42de6d905_deposits.csv
+2025-04-28 21:05:55,201 - INFO - Successfully exported 1 deposits to output/Aafiah_Khan_9cfe983a-f949-4c99-8a09-13a42de6d905_deposits.csv
+2025-04-28 21:05:58,204 - INFO - Processing child 2/6: Aaryan Bindlish (ID: d5852555-c9eb-44d8-88eb-0b0087e88b5a)
+2025-04-28 21:05:58,205 - INFO - Navigating to child profile: Aaryan Bindlish (ID: d5852555-c9eb-44d8-88eb-0b0087e88b5a)
+2025-04-28 21:05:58,206 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/d5852555-c9eb-44d8-88eb-0b0087e88b5a/plansAndInvoices
+2025-04-28 21:05:58,251 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 21:06:01,264 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 21:06:01,570 - INFO - Finding deposits with improved 4-state refund detection...
+2025-04-28 21:06:01,908 - INFO - Found 1 deposits
+2025-04-28 21:06:01,908 - INFO - Page title: Famly | Child profile
+2025-04-28 21:06:01,908 - INFO - Found 1 paragraphs containing 'Deposit'
+2025-04-28 21:06:01,908 - INFO - Total paragraphs: 20
+2025-04-28 21:06:01,908 - INFO - Extracting details for 1 deposits...
+2025-04-28 21:06:03,909 - INFO - Extracted details for 1 deposits
+2025-04-28 21:06:03,910 - INFO - Exporting data to CSV: output/Aaryan_Bindlish_d5852555-c9eb-44d8-88eb-0b0087e88b5a_deposits.csv
+2025-04-28 21:06:03,913 - INFO - Successfully exported 1 deposits to output/Aaryan_Bindlish_d5852555-c9eb-44d8-88eb-0b0087e88b5a_deposits.csv
+2025-04-28 21:06:06,919 - INFO - Processing child 3/6: Abdulrahman Eisa (ID: e7d47f8b-5d50-4355-8752-57c4bbc76181)
+2025-04-28 21:06:06,920 - INFO - Navigating to child profile: Abdulrahman Eisa (ID: e7d47f8b-5d50-4355-8752-57c4bbc76181)
+2025-04-28 21:06:06,921 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/e7d47f8b-5d50-4355-8752-57c4bbc76181/plansAndInvoices
+2025-04-28 21:06:06,971 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 21:06:09,990 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 21:06:10,294 - INFO - Finding deposits with improved 4-state refund detection...
+2025-04-28 21:06:10,622 - INFO - Found 1 deposits
+2025-04-28 21:06:10,622 - INFO - Page title: Famly | Child profile
+2025-04-28 21:06:10,622 - INFO - Found 1 paragraphs containing 'Deposit'
+2025-04-28 21:06:10,622 - INFO - Total paragraphs: 31
+2025-04-28 21:06:10,622 - INFO - Extracting details for 1 deposits...
+2025-04-28 21:06:12,591 - INFO - Extracted details for 1 deposits
+2025-04-28 21:06:12,591 - INFO - Exporting data to CSV: output/Abdulrahman_Eisa_e7d47f8b-5d50-4355-8752-57c4bbc76181_deposits.csv
+2025-04-28 21:06:12,595 - INFO - Successfully exported 1 deposits to output/Abdulrahman_Eisa_e7d47f8b-5d50-4355-8752-57c4bbc76181_deposits.csv
+2025-04-28 21:06:15,600 - INFO - Processing child 4/6: Ada Holland (ID: 249acd47-ab38-4ba9-9684-b847408d90ca)
+2025-04-28 21:06:15,600 - INFO - Navigating to child profile: Ada Holland (ID: 249acd47-ab38-4ba9-9684-b847408d90ca)
+2025-04-28 21:06:15,601 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/249acd47-ab38-4ba9-9684-b847408d90ca/plansAndInvoices
+2025-04-28 21:06:15,645 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 21:06:18,662 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 21:06:18,967 - INFO - Finding deposits with improved 4-state refund detection...
+2025-04-28 21:06:19,299 - INFO - Found 0 deposits
+2025-04-28 21:06:19,300 - INFO - Page title: Famly | Child profile
+2025-04-28 21:06:19,300 - INFO - Found 0 paragraphs containing 'Deposit'
+2025-04-28 21:06:19,300 - INFO - Total paragraphs: 48
+2025-04-28 21:06:19,300 - WARNING - No deposits found with JavaScript finder
+2025-04-28 21:06:22,305 - INFO - Processing child 5/6: Adam John Nikkel (ID: 5c56c6fa-e6ff-4568-840b-b2e043c2fa32)
+2025-04-28 21:06:22,305 - INFO - Navigating to child profile: Adam John Nikkel (ID: 5c56c6fa-e6ff-4568-840b-b2e043c2fa32)
+2025-04-28 21:06:22,305 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/5c56c6fa-e6ff-4568-840b-b2e043c2fa32/plansAndInvoices
+2025-04-28 21:06:22,338 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 21:06:25,360 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 21:06:25,665 - INFO - Finding deposits with improved 4-state refund detection...
+2025-04-28 21:06:25,997 - INFO - Found 1 deposits
+2025-04-28 21:06:25,997 - INFO - Page title: Famly | Child profile
+2025-04-28 21:06:25,997 - INFO - Found 1 paragraphs containing 'Deposit'
+2025-04-28 21:06:25,997 - INFO - Total paragraphs: 40
+2025-04-28 21:06:25,997 - INFO - Extracting details for 1 deposits...
+2025-04-28 21:06:28,013 - INFO - Extracted details for 1 deposits
+2025-04-28 21:06:28,013 - INFO - Exporting data to CSV: output/Adam_John_Nikkel_5c56c6fa-e6ff-4568-840b-b2e043c2fa32_deposits.csv
+2025-04-28 21:06:28,017 - INFO - Successfully exported 1 deposits to output/Adam_John_Nikkel_5c56c6fa-e6ff-4568-840b-b2e043c2fa32_deposits.csv
+2025-04-28 21:06:31,018 - INFO - Processing child 6/6: Adam Mularczyk (ID: 038f24f6-14e0-42dc-9b8c-0aba81206d89)
+2025-04-28 21:06:31,019 - INFO - Navigating to child profile: Adam Mularczyk (ID: 038f24f6-14e0-42dc-9b8c-0aba81206d89)
+2025-04-28 21:06:31,019 - INFO - Navigating to URL: https://app.famly.co/#/account/childProfile/038f24f6-14e0-42dc-9b8c-0aba81206d89/plansAndInvoices
+2025-04-28 21:06:31,102 - INFO - Waiting 3 seconds for initial page load...
+2025-04-28 21:06:34,120 - INFO - Page load confirmed with selector: .sc-beqWaB.bUiODS
+2025-04-28 21:06:34,425 - INFO - Finding deposits with improved 4-state refund detection...
+2025-04-28 21:06:34,755 - INFO - Found 1 deposits
+2025-04-28 21:06:34,755 - INFO - Page title: Famly | Child profile
+2025-04-28 21:06:34,755 - INFO - Found 1 paragraphs containing 'Deposit'
+2025-04-28 21:06:34,755 - INFO - Total paragraphs: 64
+2025-04-28 21:06:34,755 - INFO - Extracting details for 1 deposits...
+2025-04-28 21:06:36,743 - INFO - Extracted details for 1 deposits
+2025-04-28 21:06:36,743 - INFO - Exporting data to CSV: output/Adam_Mularczyk_038f24f6-14e0-42dc-9b8c-0aba81206d89_deposits.csv
+2025-04-28 21:06:36,744 - INFO - Successfully exported 1 deposits to output/Adam_Mularczyk_038f24f6-14e0-42dc-9b8c-0aba81206d89_deposits.csv
+2025-04-28 21:06:36,745 - INFO - Batch processing completed. Summary saved to output/summary_20250428_210636.json
+2025-04-28 21:06:36,745 - INFO - Processed 6 children: 6 successful, 0 failed
+2025-04-28 21:06:36,745 - INFO - Total deposits extracted: 5
+2025-04-28 21:06:36,745 - INFO - Cleaning up...
+2025-04-28 21:06:36,855 - INFO - Cleanup complete

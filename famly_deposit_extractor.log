@@ -1,0 +1,42 @@
+2025-04-28 15:39:13,709 - INFO - Setting up WebDriver...
+2025-04-28 15:39:13,709 - INFO - ====== WebDriver manager ======
+2025-04-28 15:39:13,960 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 15:39:14,249 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 15:39:14,474 - INFO - There is no [mac64] chromedriver "135.0.7049.114" for browser google-chrome "135.0.7049" in cache
+2025-04-28 15:39:14,488 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 15:39:14,675 - INFO - WebDriver version 135.0.7049.114 selected
+2025-04-28 15:39:14,677 - INFO - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/135.0.7049.114/mac-arm64/chromedriver-mac-arm64.zip
+2025-04-28 15:39:14,677 - INFO - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/135.0.7049.114/mac-arm64/chromedriver-mac-arm64.zip
+2025-04-28 15:39:14,966 - INFO - Driver downloading response is 200
+2025-04-28 15:39:19,110 - INFO - Get LATEST chromedriver version for google-chrome
+2025-04-28 15:39:19,265 - INFO - Driver has been saved in cache [/Users/walkcat/.wdm/drivers/chromedriver/mac64/135.0.7049.114]
+2025-04-28 15:39:20,588 - INFO - WebDriver setup complete
+2025-04-28 15:39:20,588 - INFO - Logging in to Famly...
+2025-04-28 15:39:23,696 - INFO - Login successful
+2025-04-28 15:39:23,697 - INFO - Navigating to deposits page...
+2025-04-28 15:39:25,765 - INFO - Navigation to deposits page complete
+2025-04-28 15:39:25,765 - INFO - Finding deposits on page...
+2025-04-28 15:39:25,776 - ERROR - Error finding deposits: Message: javascript error: containerSelectors is not iterable
+  (Session info: chrome=135.0.7049.115)
+Stacktrace:
+0   chromedriver                        0x0000000102ecea54 cxxbridge1$str$ptr + 2803960
+1   chromedriver                        0x0000000102ec6cf0 cxxbridge1$str$ptr + 2771860
+2   chromedriver                        0x0000000102a12864 cxxbridge1$string$len + 93028
+3   chromedriver                        0x0000000102a18468 cxxbridge1$string$len + 116584
+4   chromedriver                        0x0000000102a1aa4c cxxbridge1$string$len + 126284
+5   chromedriver                        0x0000000102a9b178 cxxbridge1$string$len + 652408
+6   chromedriver                        0x0000000102a9a480 cxxbridge1$string$len + 649088
+7   chromedriver                        0x0000000102a4d7ec cxxbridge1$string$len + 334572
+8   chromedriver                        0x0000000102e93ccc cxxbridge1$str$ptr + 2562928
+9   chromedriver                        0x0000000102e96f98 cxxbridge1$str$ptr + 2575932
+10  chromedriver                        0x0000000102e742c4 cxxbridge1$str$ptr + 2433384
+11  chromedriver                        0x0000000102e97810 cxxbridge1$str$ptr + 2578100
+12  chromedriver                        0x0000000102e652f0 cxxbridge1$str$ptr + 2371988
+13  chromedriver                        0x0000000102eb757c cxxbridge1$str$ptr + 2708512
+14  chromedriver                        0x0000000102eb7708 cxxbridge1$str$ptr + 2708908
+15  chromedriver                        0x0000000102ec693c cxxbridge1$str$ptr + 2770912
+16  libsystem_pthread.dylib             0x000000019afe32e4 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019afde0fc thread_start + 8
+
+2025-04-28 15:39:25,776 - INFO - Cleaning up...
+2025-04-28 15:39:25,867 - INFO - Cleanup complete
